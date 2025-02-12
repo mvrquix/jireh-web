@@ -16,8 +16,6 @@ async function sendRequest({ query, variables }) {
       body: { query, variables } && JSON.stringify({ query, variables }),
     });
     const json = await response.json();
-    console.log(json);
-
     if (json.errors) {
       console.error("Error: ", json.errors[0]);
       return {
