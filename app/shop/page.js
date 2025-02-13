@@ -14,7 +14,7 @@ export default function Shop() {
 
   const getAllProducts = async () => {
     const result = await fetchAllProducts();
-    setProducts(result.body);
+    setProducts(result);
   };
 
   return (

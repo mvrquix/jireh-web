@@ -5,7 +5,6 @@ import { cookies } from "next/headers";
 async function sendRequest({ query, variables }) {
   const endpoint = process.env.SHOPIFY_STORE_DOMAIN;
   const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
-  console.log("Query:", query);
   try {
     const response = await fetch(endpoint, {
       method: "POST",
@@ -25,7 +24,7 @@ async function sendRequest({ query, variables }) {
 
     return {
       status: response.status,
-      body: json.data.products.edges,
+      body: json.data,
     };
   } catch (error) {
     console.error("Error:", error);
@@ -37,12 +36,13 @@ async function sendRequest({ query, variables }) {
 }
 
 export async function fetchAllProducts() {
-  return sendRequest({
+  const response = await sendRequest({
     query: `{
             products(sortKey: TITLE, first: 100) {
                 edges{
                     node {
                       id
+                      handle
                       title
                       description
                       featuredImage {
@@ -53,11 +53,54 @@ export async function fetchAllProducts() {
                           amount
                         }
                       }
+                      variants(first: 1) {
+                        edges {
+                          node {
+                            id
+                          }
+                        }
+                      }
                     }
                 }
             }
         }`,
   });
+  return response.body.products.edges;
+}
+
+export async function fetchProductByHandle(handle) {
+  const response = await sendRequest({
+    query: `
+      query($handle: String) {
+        product(handle: $handle) {
+          id
+          title
+          description
+          images(first: 4) {
+            edges {
+              node {
+                id
+                url
+              }
+            }
+          }
+          variants(first: 1) {
+            edges {
+              node {
+                id
+                price {
+                  amount
+                }
+              }
+            }
+          }
+        }
+      }`,
+    variables: {
+      handle: handle
+    }
+  });
+  return response.body.product
 }
 
 async function createCart(productId, quantity) {
@@ -93,10 +136,11 @@ async function createCart(productId, quantity) {
       },
     },
   });
-  console.log(response);
-  const cartId = response.data.cart.id(await cookies()).set({
+  var cart = response.body.cartCreate.cart;
+  const cookieStore = await cookies();
+  cookieStore.set({
     name: "cart",
-    value: cartId,
+    value: cart["id"],
     maxAge: 10 * 24 * 60 * 60, // 10 days
   });
 
@@ -104,57 +148,63 @@ async function createCart(productId, quantity) {
 }
 
 export async function fetchCart() {
-  const cartId = (await cookies()).get("cart")?.value;
+  const cookieStore = await cookies();
+  const cartId = cookieStore.get("cart")?.value;
 
   if (!cartId) return null;
 
-  return sendRequest({
-    query: `{
-      cart(id: ${cartId}) {
-        id
-        createdAt
-        updatedAt
-        lines(first: 10) {
-          edges {
-            node {
-              id
-              quantity
-              cost {
-                amountPerQuantity {
-                  amount
-                  currencyCode
-                }
-                subtotalAmount {
-                  amount
-                  currencyCode
-                }
-                totalAmount {
-                  amount
-                  currencyCode
+  const response = await sendRequest({
+    query: `
+      query($id: ID!) {
+        cart(id: $id) {
+            id
+            createdAt
+            updatedAt
+            lines(first: 10) {
+              edges {
+                node {
+                  id
+                  quantity
+                  cost {
+                    amountPerQuantity {
+                      amount
+                      currencyCode
+                    }
+                    subtotalAmount {
+                      amount
+                      currencyCode
+                    }
+                    totalAmount {
+                      amount
+                      currencyCode
+                    }
+                  }
+                  merchandise {
+                    ... on ProductVariant {
+                      id
+                      title
+                      image {
+                        url
+                      }
+                      price {
+                        amount
+                        currencyCode
+                      }
+                    }
+                  }
                 }
               }
-              merchandise {
-                ... on ProductVariant {
-                  id
-                  title
-                  image {
-                    url
-                  }
-                  price {
-                    amount
-                    currencyCode
-                  }
-                }
+              nodes {
+                id
               }
             }
           }
-          nodes {
-            id
-          }
-        }
-      }
-    }`,
+      }`,
+    variables: {
+      id: cartId
+    }
   });
+  return response.body.cart
 }
 
 export async function addProductToCart(productId, quantity) {

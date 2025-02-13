@@ -147,7 +147,7 @@ body ::-moz-selection {color: white; background: black;}
 .hidden{display: none!important;}
 .visible{display: block!important;}
 .inline-indent{width: 10px; height: 1px; background: currentColor; display: inline-block; vertical-align: middle; margin-right: 10px; position: relative; top: -1px;}
-.fixed-background{background-size: cover; background-position: center top; background-attachment: fixed;}
+.fixed-background{background-size: cover; background-position: right; background-attachment: fixed;}
 body.mobile .fixed-background{background-attachment: scroll;}
 .label{white-space: normal;}
 /*loader*/

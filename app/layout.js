@@ -3,9 +3,9 @@
 import { usePathname } from "next/navigation";
 import { Provider } from "@/components/ui/provider";
 import Script from "next/script";
-import { LightMode } from "@/components/ui/color-mode";
 import { Theme } from "@chakra-ui/react";
-import { ShopHeader } from "./components/ShopHeader";
+import { ShopHeader } from "./components/shop-header";
+import LandingHeader from "./components/landing-header";
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
       <html lang="en" suppressHydrationWarning>
         <body>
           <Provider>
-            <Theme appearance="light">
+            <Theme appearance="dark">
               <ShopHeader />
               {children}
             </Theme>
@@ -80,49 +80,24 @@ function HomeLayout({ children }) {
         />
       </head>
       <body className="fonts-8">
-        {children}
+        <div id="content-block">
+          <LandingHeader />
+          {children}
+        </div>
 
         <Script
           src="js/home/jquery-2.1.4.min.js"
           strategy="beforeInteractive"
         />
-        <Script src="js/home/swiper.jquery.min.js" />
-        <Script src="js/home/jquery.mousewheel.min.js" />
+        <Script
+          src="js/home/swiper.jquery.min.js"
+        />
+        <Script
+          src="js/home/jquery.mousewheel.min.js"
+        />
         <Script src="js/home/global.js" />
 
-        <Script src="js/home/isotope.pkgd.min.js" />
-        <Script>
-          {`$(function(){
-            $(window).load(function(){
-
-                var $container = $('.sorting-container').isotope({
-                    itemSelector: '.sorting-item',
-                    masonry: {
-                        columnWidth: '.grid-sizer'
-                    }
-                });
-
-                $('.sorting-menu a').click(function() {
-                    if($(this).hasClass('active')) return false;
-                    $(this).parent().parent().find('.active').removeClass('active');
-                    $(this).addClass('active');
-                    $(this).closest('.sorting-menu').find('.responsive-filtration-title .text').text($(this).text());
-                    var filterValue = $(this).attr('data-filter');
-                    $container.isotope({ filter: filterValue });
-                });
-
-            });
-        });`}
-        </Script>
-
-        <Script src="js/home/simple-lightbox.min.js" />
-        <Script>
-          {`$(function(){
-            var lightbox = $('.lightbox').simpleLightbox({
-                disableScroll: false
-            });
-        });`}
-        </Script>
+        <Script src="js/home/tiltfx.js" />
       </body>
     </html>
   );
