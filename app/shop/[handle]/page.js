@@ -5,8 +5,8 @@ import {
   Box,
   Button,
   Container,
-  Flex,
   Group,
+  Heading,
   Image,
   Stack,
   Text,
@@ -15,10 +15,14 @@ import {
   addProductToCart,
   fetchProductByHandle,
 } from "@/app/actions/shopify-actions";
+import { Skeleton, SkeletonText } from "@/components/ui/skeleton";
+import { BreadcrumbLink, BreadcrumbRoot } from "@/components/ui/breadcrumb";
+import { RiArrowGoBackFill } from "react-icons/ri";
 
 export default function ShopProduct({ params }) {
   params = use(params);
   const [product, setProduct] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     getProductByHandle();
@@ -26,6 +30,7 @@ export default function ShopProduct({ params }) {
 
   const getProductByHandle = async () => {
     const result = await fetchProductByHandle(params.handle);
+    setSelectedImage(result.images.edges[0])
     setProduct(result);
   };
 
@@ -33,36 +38,63 @@ export default function ShopProduct({ params }) {
     await addProductToCart(id, 1);
   };
 
-  if (!product) return "";
+  if (!product) {
+    return (
+      <Container>
+        <Stack direction={{ base: "column", md: "row" }} wrap="wrap" gap="4">
+          <Skeleton
+            width={{ base: "100%", md: "50%" }}
+            height={{ base: "298px", md: "505px" }}
+          />
+          <Box width={{ base: "100%", md: "48%" }}>
+            <SkeletonText noOfLines="8" />
+          </Box>
+        </Stack>
+      </Container>
+    );
+  }
 
   const { images, variants } = product;
   const variant = variants.edges[0].node;
+  const currencyFormatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
   return (
     <Container>
+      <BreadcrumbRoot style={{marginBottom: "25px"}}>
+        <BreadcrumbLink href="/shop"><RiArrowGoBackFill /> Back to Shop</BreadcrumbLink>
+      </BreadcrumbRoot>
       {product && (
         <Stack direction={{ base: "column", md: "row" }} wrap="wrap" gap="8">
           <Box width={{ base: "100%", md: "49%" }}>
             <Stack wrap="wrap">
-              <Image src={images.edges[0].node.url} rounded="md" width="100%" />
+              <Image src={selectedImage.node.url} rounded="md" width="100%" maxHeight="505px" />
               <Group wrap="wrap">
                 {images.edges.map((image) => (
                   <Image
                     key={image.node.id}
                     src={image.node.url}
+                    onClick={() => setSelectedImage(image)}
                     rounded="md"
                     height="100px"
+                    cursor="pointer"
                   />
                 ))}
               </Group>
             </Stack>
           </Box>
 
-          <Box width={{ base: "100%", md: "48%" }}>
-            <Stack>
-              <Text>{product.title}</Text>
+          <Box width={{ base: "100%", md: "48%" }} paddingBottom="8">
+            <Stack gap="8">
+              <Heading size="2xl" fontWeight="bold">
+                {product.title}
+              </Heading>
               <Text>{product.description}</Text>
-
-              <Text>{variant.price.amount}</Text>
+              <Text textStyle="xl">
+                {currencyFormatter.format(variant.price.amount)}
+              </Text>
               <Button
                 onClick={() => onAddToCartClick(variant.id)}
                 width="180px"
