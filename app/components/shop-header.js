@@ -28,13 +28,19 @@ import {
   NumberInputField,
   NumberInputRoot,
 } from "@/components/ui/number-input";
+import { useEventEmitter } from "../hooks/event-emitter-hook";
 
 export function ShopHeader() {
   const [cart, setCart] = useState(null);
+  const { eventData } = useEventEmitter("cart-update")
 
   useEffect(() => {
     getCart();
   }, []);
+
+  useEffect(() => {
+    getCart()
+  }, [eventData])
 
   const getCart = async () => {
     const result = await fetchCart();

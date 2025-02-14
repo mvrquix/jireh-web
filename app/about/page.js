@@ -41,8 +41,7 @@ export default function About() {
                     <div className="empty-space col-xs-b15"></div>
                     <div className="simple-article grey">
                         <p>Jireh Athletics was founded out of my passion for both sports and faith. As a former professional basketball player and lawyer, I have experienced the power of God being the great provider, and now seek to use this platform to share the message of Jesus Christ. Jireh Athletics is not just about athletics—it’s about inspiring others to live out their faith boldly and unapologetically. </p>
-                        <br/>
-                        <p>Jireh Athletics is not just about athletics-it's about inspiring others to live out their faith boldly and unapologetically.</p>
+                        <p><i>- Andrae Nelson</i></p>
                     </div>
                 </div>
             </div>

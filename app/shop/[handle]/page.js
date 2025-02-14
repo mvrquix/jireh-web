@@ -18,11 +18,13 @@ import {
 import { Skeleton, SkeletonText } from "@/components/ui/skeleton";
 import { BreadcrumbLink, BreadcrumbRoot } from "@/components/ui/breadcrumb";
 import { RiArrowGoBackFill } from "react-icons/ri";
+import { useEventEmitter } from "@/app/hooks/event-emitter-hook";
 
 export default function ShopProduct({ params }) {
   params = use(params);
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const { publishEvent } = useEventEmitter("cart-update");
 
   useEffect(() => {
     getProductByHandle();
@@ -30,12 +32,13 @@ export default function ShopProduct({ params }) {
 
   const getProductByHandle = async () => {
     const result = await fetchProductByHandle(params.handle);
-    setSelectedImage(result.images.edges[0])
+    setSelectedImage(result.images.edges[0]);
     setProduct(result);
   };
 
   const onAddToCartClick = async (id) => {
     await addProductToCart(id, 1);
+    publishEvent({ data: true });
   };
 
   if (!product) {
@@ -62,15 +65,22 @@ export default function ShopProduct({ params }) {
   });
 
   return (
-    <Container>
-      <BreadcrumbRoot style={{marginBottom: "25px"}}>
-        <BreadcrumbLink href="/shop"><RiArrowGoBackFill /> Back to Shop</BreadcrumbLink>
+    <Container paddingTop="8">
+      <BreadcrumbRoot style={{ marginBottom: "25px" }}>
+        <BreadcrumbLink href="/shop">
+          <RiArrowGoBackFill /> Back to Shop
+        </BreadcrumbLink>
       </BreadcrumbRoot>
       {product && (
         <Stack direction={{ base: "column", md: "row" }} wrap="wrap" gap="8">
           <Box width={{ base: "100%", md: "49%" }}>
             <Stack wrap="wrap">
-              <Image src={selectedImage.node.url} rounded="md" width="100%" maxHeight="505px" />
+              <Image
+                src={selectedImage.node.url}
+                rounded="md"
+                width="100%"
+                maxHeight="505px"
+              />
               <Group wrap="wrap">
                 {images.edges.map((image) => (
                   <Image
