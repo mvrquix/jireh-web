@@ -10,7 +10,7 @@ export default function LandingHeader() {
             <div className="col-xs-6 col-sm-10 text-right">
               <div className="navigation-wrapper">
                 <a className="logo responsive">
-                  <Image src="/img/home/logo-black.png" width="100" height="100" alt="" />
+                  <Image src="/img/home/logo-black-with-bg.png" width="100" height="100" alt="" />
                 </a>
 
                 <div className="navigation-overflow">

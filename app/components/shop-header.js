@@ -72,7 +72,7 @@ export function ShopHeader() {
     >
       <a href="/">
         <Image
-          src="/img/home/logo-black-with-bg.png"
+          src="/img/home/logo-black.png"
           width="180px"
           alt="Jireh Athletics"
         />
