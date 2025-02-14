@@ -33,6 +33,7 @@ function HomeLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        <title>Jireh Atheltics</title>
         <meta httpEquiv="content-type" content="text/html; charset=utf-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
@@ -40,7 +41,34 @@ function HomeLayout({ children }) {
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, minimal-ui"
         />
+        <meta property="og:title" content="Jireh Athletics" />
 
+        <meta
+          property="og:description"
+          content="Jireh Athletics is not just about athletics—it’s about inspiring others to live out their faith boldly and unapologetically."
+        />
+
+        <meta property="og:image" content="https://github.com/mvrquix/jireh-web/blob/main/public/img/home/logo-black-with-bg.png?raw=true" />
+
+        <meta property="og:url" content="https://www.jirehathletics.com" />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/favicon/apple-touch-icon.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/favicon/favicon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/favicon/favicon-16x16.png"
+        />
+        <link rel="manifest" href="favicon/site.webmanifest" />
         <link
           href="https://fonts.googleapis.com/css?family=Inconsolata:400,700"
           rel="stylesheet"
@@ -96,7 +124,10 @@ function HomeLayout({ children }) {
           src="js/home/swiper.jquery.min.js"
           strategy="beforeInteractive"
         />
-        <Script src="js/home/jquery.mousewheel.min.js" strategy="beforeInteractive" />
+        <Script
+          src="js/home/jquery.mousewheel.min.js"
+          strategy="beforeInteractive"
+        />
         <Script src="js/home/global.js" />
         <Script src="js/home/tiltfx.js" />
       </body>
