@@ -5,7 +5,7 @@ export default function LandingFooter() {
         <div className="row">
           <div className="col-md-6 col-xs-text-center col-md-text-left col-sm-b10 col-md-b0">
             <div className="copyright">
-              <div className="simple-article small grey transparent">
+              <div className="simple-article">
                 &copy; Jireh Athletics. 2025 All rights reserved.
               </div>
             </div>
