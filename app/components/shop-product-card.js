@@ -1,5 +1,6 @@
 import { useRouter } from "next/navigation";
-import { Box, Card, Image } from "@chakra-ui/react";
+import { Box, Card, Image, Skeleton } from "@chakra-ui/react";
+import NextImage from 'next/image'
 
 export function ShopProductCard({ product }) {
   const router = useRouter();
@@ -18,7 +19,9 @@ export function ShopProductCard({ product }) {
       onClick={() => router.push(`/shop/${handle}`)}
     >
       <Card.Root width="100%" border="0">
-        <Image src={featuredImage.url} alt={title} />
+        <Image asChild>
+          <NextImage src={featuredImage.url} alt={title} width={674} height={505} style={{width: "100%"}} />
+        </Image>
         <Card.Body gap="2">
           <Card.Title mt="2">{title}</Card.Title>
           <Card.Description>

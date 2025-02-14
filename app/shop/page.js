@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Container, Stack } from "@chakra-ui/react";
+import { Container, Skeleton, Stack } from "@chakra-ui/react";
 import { fetchAllProducts } from "../actions/shopify-actions";
 import { ShopProductCard } from "../components/shop-product-card";
 
@@ -19,6 +19,14 @@ export default function Shop() {
 
   return (
     <Container paddingTop="4" paddingBottom="4">
+      {!products && (
+        <Stack gap="4" direction={{ base: "column", md: "row" }} wrap="wrap">
+          <Skeleton width={{base: "100%", md: "49%"}} height={{base: "298px", md: "505px"}} />
+          <Skeleton width={{base: "100%", md: "49%"}} height={{base: "298px", md: "505px"}} />
+          <Skeleton width={{base: "100%", md: "49%"}} height={{base: "298px", md: "505px"}} />
+          <Skeleton width={{base: "100%", md: "49%"}} height={{base: "298px", md: "505px"}} />
+        </Stack>
+      )}
       {products && (
         <Stack gap="4" direction={{ base: "column", md: "row" }} wrap="wrap">
           {products.map((product) => {
