@@ -28,7 +28,7 @@ export default function About() {
             <div className="row">
                 <div className="col-sm-4 col-xs-b30 col-sm-b0">
                     <div className="title-line"><span></span></div>
-                    <div className="h2 small"><b>So Abraham called that place The Lord Will Provide. And to this day it is said,<br/><br/> “On the mountain of the Lord it will be provided.</b><br/><br/><i>-Genesis 22:14</i></div>
+                    <div className="h2 small"><b>So Abraham called that place The Lord Will Provide. And to this day it is said,<br/><br/> “On the mountain of the Lord it will be provided."</b><br/><br/><i>-Genesis 22:14</i></div>
                 </div>
                 <div className="col-sm-4 col-xs-b30 col-sm-b0">
                     <div className="empty-space col-xs-b15"></div>
