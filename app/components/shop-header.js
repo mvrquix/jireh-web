@@ -24,7 +24,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { RiShoppingCartFill } from "react-icons/ri";
-import { fetchCart, removeProductFromCart } from "../actions/shopify-actions";
+import { fetchCart, removeProductFromCart, updateProductQuantityInCart } from "../actions/shopify-actions";
 import {
   NumberInputField,
   NumberInputRoot,
@@ -47,6 +47,10 @@ export function ShopHeader() {
     const result = await fetchCart();
     setCart(result);
   };
+
+  const onItemQuantityUpdate = async (cartLineId, quantity) => {
+    await updateProductQuantityInCart(cart.id, cartLineId, quantity)
+  }
 
   const onRemoveItemClick = async (cartLineId) => {
     await removeProductFromCart(cart.id, cartLineId)
@@ -116,7 +120,7 @@ export function ShopHeader() {
                       {currencyFormatter.format(cost.totalAmount.amount)}
                     </Text>
                     <Stack gap="6">
-                      <NumberInputRoot defaultValue={quantity}>
+                      <NumberInputRoot defaultValue={quantity} onValueChange={(e) => onItemQuantityUpdate(id, parseInt(e.value))}>
                         <NumberInputField />
                       </NumberInputRoot>
                       <Button onClick={() => onRemoveItemClick(id)} colorPalette="red" variant="ghost">Remove</Button>

@@ -252,10 +252,12 @@ export async function updateProductQuantityInCart(
   quantity
 ) {
   return await sendRequest({
-    mutation: `
+    query: `
     mutation cartLinesUpdate($cartId: ID!, $lines: [CartLineUpdateInput!]!){
       cartLinesUpdate(cartId: $cartId, lines: $lines) {
-        id
+        cart {
+          id
+        }
       }
     }`,
     variables: {
