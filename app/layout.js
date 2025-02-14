@@ -68,7 +68,7 @@ function HomeLayout({ children }) {
           sizes="16x16"
           href="/favicon/favicon-16x16.png"
         />
-        <link rel="manifest" href="favicon/site.webmanifest" />
+        <link rel="manifest" href="/favicon/site.webmanifest" />
         <link
           href="https://fonts.googleapis.com/css?family=Inconsolata:400,700"
           rel="stylesheet"
