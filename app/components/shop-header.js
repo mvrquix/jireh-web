@@ -9,6 +9,7 @@ import {
   Flex,
   Float,
   Image,
+  Stack,
   Text,
 } from "@chakra-ui/react";
 import {
@@ -23,7 +24,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { RiShoppingCartFill } from "react-icons/ri";
-import { fetchCart } from "../actions/shopify-actions";
+import { fetchCart, removeProductFromCart } from "../actions/shopify-actions";
 import {
   NumberInputField,
   NumberInputRoot,
@@ -32,20 +33,25 @@ import { useEventEmitter } from "../hooks/event-emitter-hook";
 
 export function ShopHeader() {
   const [cart, setCart] = useState(null);
-  const { eventData } = useEventEmitter("cart-update")
+  const { eventData } = useEventEmitter("cart-update");
 
   useEffect(() => {
     getCart();
   }, []);
 
   useEffect(() => {
-    getCart()
-  }, [eventData])
+    getCart();
+  }, [eventData]);
 
   const getCart = async () => {
     const result = await fetchCart();
     setCart(result);
   };
+
+  const onRemoveItemClick = async (cartLineId) => {
+    await removeProductFromCart(cart.id, cartLineId)
+    getCart()
+  }
 
   const currencyFormatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -53,7 +59,13 @@ export function ShopHeader() {
   });
 
   return (
-    <Flex justify="space-between" align="center" gap="4" paddingStart="10" paddingEnd="10">
+    <Flex
+      justify="space-between"
+      align="center"
+      gap="4"
+      paddingStart="10"
+      paddingEnd="10"
+    >
       <a href="/">
         <Image
           src="/img/home/logo-black.png"
@@ -103,9 +115,12 @@ export function ShopHeader() {
                       <br />
                       {currencyFormatter.format(cost.totalAmount.amount)}
                     </Text>
-                    <NumberInputRoot defaultValue={quantity}>
-                      <NumberInputField />
-                    </NumberInputRoot>
+                    <Stack gap="6">
+                      <NumberInputRoot defaultValue={quantity}>
+                        <NumberInputField />
+                      </NumberInputRoot>
+                      <Button onClick={() => onRemoveItemClick(id)} colorPalette="red" variant="ghost">Remove</Button>
+                    </Stack>
                   </Flex>
                 );
               })}

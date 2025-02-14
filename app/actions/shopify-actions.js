@@ -216,7 +216,7 @@ export async function addProductToCart(productId, quantity) {
 
   if (!cartId) return createCart(productId, quantity);
 
-  return sendRequest({
+  return await sendRequest({
     query: `
       mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
         cartLinesAdd(
@@ -251,25 +251,38 @@ export async function updateProductQuantityInCart(
   cartLineId,
   quantity
 ) {
-  return sendRequest({
-    mutation: `{
-      cartLinesUpdate(
-        cartId: ${cartId}
-        lines: [
-          id: ${cartLineId}
-          quantity: ${quantity}
-        ]
-      ) {
+  return await sendRequest({
+    mutation: `
+    mutation cartLinesUpdate($cartId: ID!, $lines: [CartLineUpdateInput!]!){
+      cartLinesUpdate(cartId: $cartId, lines: $lines) {
         id
-        lines(first: 10) {
-          edges {
-            node {
-              id
-              quantity
-            }
-          }
+      }
+    }`,
+    variables: {
+      cartId: cartId,
+      lines: [
+        {
+          id: cartLineId,
+          quantity: quantity,
+        },
+      ],
+    },
+  });
+}
+
+export async function removeProductFromCart(cartId, cartLineId) {
+  return await sendRequest({
+    query: `
+    mutation cartLinesRemove($cartId: ID!, $lineIds: [ID!]!){
+      cartLinesRemove(cartId: $cartId, lineIds: $lineIds) {
+        cart {
+          id
         }
       }
     }`,
+    variables: {
+      cartId: cartId,
+      lineIds: [cartLineId],
+    },
   });
 }
