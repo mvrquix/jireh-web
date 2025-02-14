@@ -6,11 +6,13 @@ import {
   Box,
   Button,
   Circle,
+  EmptyState,
   Flex,
   Float,
   Image,
   Stack,
   Text,
+  VStack,
 } from "@chakra-ui/react";
 import {
   DrawerBackdrop,
@@ -83,7 +85,7 @@ export function ShopHeader() {
         <DrawerTrigger asChild>
           <Button variant="ghost" size="lg">
             <RiShoppingCartFill />
-            {cart && (
+            {(cart && cart.lines.edges.length > 0) && (
               <Float placement="top-start">
                 <Circle size="5" bg="red" color="white">
                   {cart.lines.edges.length}
@@ -97,6 +99,18 @@ export function ShopHeader() {
             <DrawerTitle>Your Cart</DrawerTitle>
           </DrawerHeader>
           <DrawerBody>
+            {(cart && cart.lines.edges.length === 0) &&
+              <EmptyState.Root>
+                <EmptyState.Content>
+                  <EmptyState.Indicator>
+                    <RiShoppingCartFill />
+                  </EmptyState.Indicator>
+                  <VStack textAlign="center">
+                    <EmptyState.Description>Your cart is empty</EmptyState.Description>
+                  </VStack>
+                </EmptyState.Content>
+              </EmptyState.Root>
+            }
             {cart &&
               cart.lines.edges.map((c) => {
                 const { id, merchandise, quantity, cost } = c.node;
@@ -130,7 +144,7 @@ export function ShopHeader() {
               })}
           </DrawerBody>
           <DrawerFooter>
-            {cart && (
+            {(cart && cart.lines.edges.length > 0)&& (
               <Button rounded="full" asChild>
                 <a href={cart.checkoutUrl}>Checkout</a>
               </Button>
