@@ -28,7 +28,7 @@ export default function About() {
             <div className="row">
                 <div className="col-sm-4 col-xs-b30 col-sm-b0">
                     <div className="title-line"><span></span></div>
-                    <div className="h2 small"><b>“On the mountain of the Lord it will be provided.”</b><br/><br/><i>-Genisis 22:14</i></div>
+                    <div className="h2 small"><b>So Abraham called that place The Lord Will Provide. And to this day it is said,<br/><br/> “On the mountain of the Lord it will be provided.</b><br/><br/><i>-Genesis 22:14</i></div>
                 </div>
                 <div className="col-sm-4 col-xs-b30 col-sm-b0">
                     <div className="empty-space col-xs-b15"></div>
@@ -40,7 +40,7 @@ export default function About() {
                     <div className="h5"><b>ABOUT</b></div>
                     <div className="empty-space col-xs-b15"></div>
                     <div className="simple-article grey">
-                        <p>Jireh Athletics was founded out of my passion for both professional basketball player and lawyer. I have experienced the Power of God being the Great Provider and am now using this platform to share the message of Jesus Christ. </p>
+                        <p>Jireh Athletics was founded out of my passion for both sports and faith. As a former professional basketball player and lawyer, I have experienced the power of God being the great provider, and now seek to use this platform to share the message of Jesus Christ. Jireh Athletics is not just about athletics—it’s about inspiring others to live out their faith boldly and unapologetically. </p>
                         <br/>
                         <p>Jireh Athletics is not just about athletics-it's about inspiring others to live out their faith boldly and unapologetically.</p>
                     </div>

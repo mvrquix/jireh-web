@@ -47,10 +47,10 @@
   -webkit-box-sizing: content-box;
   -moz-box-sizing: content-box;
   box-sizing: content-box;
-  cursor:url(../img/drag.png) 16 9, ew-resize!important;
+  cursor:url(../../img/home/drag.png) 16 9, ew-resize!important;
 }
 .swiper-container-vertical .swiper-wrapper{
-  cursor:url(../img/drag-vertical.png) 8 16, ew-resize!important;
+  cursor:url(../../img/home/drag-vertical.png) 8 16, ew-resize!important;
 }
 .swiper-container-android .swiper-slide,
 .swiper-wrapper {
@@ -444,8 +444,8 @@ button.swiper-pagination-bullet {
 .swiper-button-disabled+.swiper-button-disabled+.swiper-wrapper{transform: none!important; -moz-transform: none!important; -webkit-transform: none!important; -ms-transform: none!important;}
 .swiper-button-disabled+.swiper-button-disabled+.swiper-wrapper+.swiper-pagination{display: none;}
 
-.swiper-button-prev.style-1{background-image: url(../img/arrow1-left.png); transform-origin: 0 50%;}
-.swiper-button-next.style-1{background-image: url(../img/arrow1-right.png); transform-origin: 100% 50%;}
+.swiper-button-prev.style-1{background-image: url(../../img/home/arrow1-left.png); transform-origin: 0 50%;}
+.swiper-button-next.style-1{background-image: url(../../img/home/arrow1-right.png); transform-origin: 100% 50%;}
 .swiper-button-prev.style-1:not(.swiper-button-disabled):hover{transform: perspective(300px) rotateY(20deg);}
 .swiper-button-next.style-1:not(.swiper-button-disabled):hover{transform: perspective(300px) rotateY(-20deg);}
 
@@ -455,10 +455,10 @@ button.swiper-pagination-bullet {
 .swiper-button.style-2:before{border-left-color: #c8c8c8; border-bottom-color: #c8c8c8}
 .swiper-button.style-2:after{border-right-color: #c8c8c8; border-top-color: #c8c8c8;}
 .swiper-button.style-2:hover:before, .swiper-button.style-2:hover:after{width: 100%; height: 100%; opacity: 1; -webkit-transition:width 0.3s ease-out, height 0.3s ease-out, opacity 0s ease-out .3s; transition:width 0.3s ease-out, height 0.3s ease-out, opacity 0s ease-out 0s;}
-.swiper-button-prev.style-2{background-image: url(../img/arrow2-left.png); left: 50px;}
-.swiper-button-next.style-2{background-image: url(../img/arrow2-right.png); right: 50px;}
-.swiper-button-prev.style-2.dark{background-image: url(../img/arrow1-left.png);}
-.swiper-button-next.style-2.dark{background-image: url(../img/arrow1-right.png);}
+.swiper-button-prev.style-2{background-image: url(../../img/home/arrow2-left.png); left: 50px;}
+.swiper-button-next.style-2{background-image: url(../../img/home/arrow2-right.png); right: 50px;}
+.swiper-button-prev.style-2.dark{background-image: url(../../img/home/arrow1-left.png);}
+.swiper-button-next.style-2.dark{background-image: url(../../img/home/arrow1-right.png);}
 .swiper-button-prev.style-2.swiper-button-disabled, .swiper-button-next.style-2.swiper-button-disabled {opacity: 0;}
 
 .swiper-button.style-3{width: 60px; height: 40px; background-size: auto auto; color: #000;}
@@ -467,17 +467,17 @@ button.swiper-pagination-bullet {
 .swiper-button.style-3:hover:before, .scroll-button.style-3:hover:before{left: 0px; border-color: currentColor;}
 .swiper-button.style-3:after, .scroll-button.style-3:after{position: absolute; left: 10px; top: 0; right: 10px; bottom: 0; border-top: 1px transparent solid; border-right: 1px transparent solid; content: "";}
 .swiper-button.style-3:hover:after, .scroll-button.style-3:hover:after{right: 0px; border-color: currentColor;}
-.swiper-button-prev.style-3{background-image: url(../img/arrow3-left.png); background-position: left center; left: 50px;}
-.swiper-button-next.style-3{background-image: url(../img/arrow3-right.png); background-position: right center; right: 50px;}
-.swiper-button-prev.style-3.light{background-image: url(../img/arrow3-left-light.png);}
-.swiper-button-next.style-3.light{background-image: url(../img/arrow3-right-light.png);}
+.swiper-button-prev.style-3{background-image: url(../../img/home/arrow3-left.png); background-position: left center; left: 50px;}
+.swiper-button-next.style-3{background-image: url(../../img/home/arrow3-right.png); background-position: right center; right: 50px;}
+.swiper-button-prev.style-3.light{background-image: url(../../img/home/arrow3-left-light.png);}
+.swiper-button-next.style-3.light{background-image: url(../../img/home/arrow3-right-light.png);}
 .swiper-button-prev.style-3:hover{background-position: left 10px center;}
 .swiper-button-next.style-3:hover{background-position: right 10px center;}
 .swiper-button.style-3, .swiper-button.style-3:before, .swiper-button.style-3:after, .scroll-button.style-3, .scroll-button.style-3:before, .scroll-button.style-3:after{-webkit-transition:all 0.15s ease-out; transition:all 0.15s ease-out;}
 .swiper-button.style-3:hover:before, .swiper-button.style-3:hover:after, .swiper-button.style-3, .scroll-button.style-3, .scroll-button.style-3:hover:before, .scroll-button.style-3:hover:after{transition-delay: 0.15s; -webkit-transition-delay: 0.15s;}
 .swiper-button.style-3:hover, .scroll-button.style-3:hover{transition-delay: 0s; -webkit-transition-delay: 0s;}
 
-.scroll-button.style-3{position: absolute; bottom: 30px; width: 40px; height: 60px; left: 50%; margin-left: -20px; background: url(../img/arrow3-scroll.png) center bottom no-repeat; cursor: pointer; color: #000;}
-.scroll-button.style-3.light{color: #fff; background-image: url(../img/arrow3-scroll-light.png);}
+.scroll-button.style-3{position: absolute; bottom: 30px; width: 40px; height: 60px; left: 50%; margin-left: -20px; background: url(../../img/home/arrow3-scroll.png) center bottom no-repeat; cursor: pointer; color: #000;}
+.scroll-button.style-3.light{color: #fff; background-image: url(../../img/home/arrow3-scroll-light.png);}
 .homepage-14-slider .scroll-button.style-3{bottom: -100px;}
 .scroll-button.style-3:hover{background-position: center bottom 10px;}

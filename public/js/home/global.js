@@ -61,7 +61,13 @@ $(function() {
 	/*============================*/
 	/* 04 - function on page load */
 	/*============================*/
+	initPage()
 	$(window).load(function(){
+		
+	});
+
+	function initPage() {
+		console.log('init called')
 		initSwiper();
 		$('body').addClass('loaded');
 		$('#loader-wrapper').fadeOut();
@@ -69,7 +75,7 @@ $(function() {
 			pageCalculations();
 			scrollCall();
 		},0);
-	});
+	}
 
 	/*==============================*/
 	/* 05 - function on page resize */

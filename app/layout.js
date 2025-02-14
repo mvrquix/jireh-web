@@ -6,6 +6,7 @@ import Script from "next/script";
 import { Theme } from "@chakra-ui/react";
 import { ShopHeader } from "./components/shop-header";
 import LandingHeader from "./components/landing-header";
+import LandingFooter from "./components/landing-footer";
 
 export default function RootLayout({ children }) {
   const pathname = usePathname();
@@ -34,7 +35,7 @@ function HomeLayout({ children }) {
       <head>
         <meta httpEquiv="content-type" content="text/html; charset=utf-8" />
         <meta name="format-detection" content="telephone=no" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, minimal-ui"
@@ -80,9 +81,11 @@ function HomeLayout({ children }) {
         />
       </head>
       <body className="fonts-8">
+        <div id="loader-wrapper"></div>
         <div id="content-block">
           <LandingHeader />
           {children}
+          <LandingFooter />
         </div>
 
         <Script
@@ -91,12 +94,10 @@ function HomeLayout({ children }) {
         />
         <Script
           src="js/home/swiper.jquery.min.js"
+          strategy="beforeInteractive"
         />
-        <Script
-          src="js/home/jquery.mousewheel.min.js"
-        />
+        <Script src="js/home/jquery.mousewheel.min.js" strategy="beforeInteractive" />
         <Script src="js/home/global.js" />
-
         <Script src="js/home/tiltfx.js" />
       </body>
     </html>
