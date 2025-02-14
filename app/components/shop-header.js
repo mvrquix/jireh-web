@@ -41,12 +41,16 @@ export function ShopHeader() {
     setCart(result);
   };
 
+  const currencyFormatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
   return (
-    <Flex justify="space-between" align="center" gap="4" paddingEnd="4">
-      <Box />
+    <Flex justify="space-between" align="center" gap="4" paddingStart="10" paddingEnd="10">
       <a href="/">
         <Image
-          src="/img/home/logo-white.png"
+          src="/img/home/logo-black.png"
           width="180px"
           alt="Jireh Athletics"
         />
@@ -59,7 +63,9 @@ export function ShopHeader() {
             <RiShoppingCartFill />
             {cart && (
               <Float placement="top-start">
-                <Circle size="5" bg="red" color="white">{cart.lines.edges.length}</Circle>
+                <Circle size="5" bg="red" color="white">
+                  {cart.lines.edges.length}
+                </Circle>
               </Float>
             )}
           </Button>
@@ -73,7 +79,13 @@ export function ShopHeader() {
               cart.lines.edges.map((c) => {
                 const { id, merchandise, quantity, cost } = c.node;
                 return (
-                  <Flex key={id} align="center" justify="space-between" gap="4">
+                  <Flex
+                    key={id}
+                    align="center"
+                    justify="space-between"
+                    gap="4"
+                    marginBottom="8"
+                  >
                     <Image
                       src={merchandise.image.url}
                       rounded="md"
@@ -83,7 +95,7 @@ export function ShopHeader() {
                     <Text>
                       {merchandise.title}
                       <br />
-                      {cost.totalAmount.amount}
+                      {currencyFormatter.format(cost.totalAmount.amount)}
                     </Text>
                     <NumberInputRoot defaultValue={quantity}>
                       <NumberInputField />
@@ -93,7 +105,11 @@ export function ShopHeader() {
               })}
           </DrawerBody>
           <DrawerFooter>
-            <Button>Checkout</Button>
+            {cart && (
+              <Button rounded="full" asChild>
+                <a href={cart.checkoutUrl}>Checkout</a>
+              </Button>
+            )}
           </DrawerFooter>
           <DrawerCloseTrigger />
         </DrawerContent>

@@ -97,10 +97,10 @@ export async function fetchProductByHandle(handle) {
         }
       }`,
     variables: {
-      handle: handle
-    }
+      handle: handle,
+    },
   });
-  return response.body.product
+  return response.body.product;
 }
 
 async function createCart(productId, quantity) {
@@ -158,6 +158,7 @@ export async function fetchCart() {
       query($id: ID!) {
         cart(id: $id) {
             id
+            checkoutUrl
             createdAt
             updatedAt
             lines(first: 10) {
@@ -201,10 +202,10 @@ export async function fetchCart() {
           }
       }`,
     variables: {
-      id: cartId
-    }
+      id: cartId,
+    },
   });
-  return response.body.cart
+  return response.body.cart;
 }
 
 export async function addProductToCart(productId, quantity) {
@@ -213,28 +214,32 @@ export async function addProductToCart(productId, quantity) {
   if (!cartId) return createCart(productId, quantity);
 
   return sendRequest({
-    query: `{
-      cartLinesAdd(
-        cartId: ${cartId},
-        lines: [
-          {
-            merchandiseId: ${productId},
-            quantity: ${quantity}
-          }
-        ]
-      ) {
-        cart {
-          id
-          lines(first: 10) {
-            edges {
-              node {
-                id
+    query: `
+      mutation cartLinesAdd($cartId: ID!, $lines: [CartLineInput!]!) {
+        cartLinesAdd(
+          cartId: $cartId,
+          lines: $lines ) {
+          cart {
+            id
+            lines(first: 10) {
+              edges {
+                node {
+                  id
+                }
               }
             }
           }
         }
-      }
-    }`,
+      }`,
+    variables: {
+      cartId: cartId,
+      lines: [
+        {
+          merchandiseId: productId,
+          quantity: quantity,
+        },
+      ],
+    },
   });
 }
 
