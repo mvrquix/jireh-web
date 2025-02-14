@@ -99,7 +99,7 @@ export function ShopHeader() {
                       width="100px"
                     />
                     <Text>
-                      {merchandise.title}
+                      {merchandise.product.title}
                       <br />
                       {currencyFormatter.format(cost.totalAmount.amount)}
                     </Text>

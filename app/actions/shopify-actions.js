@@ -184,6 +184,9 @@ export async function fetchCart() {
                     ... on ProductVariant {
                       id
                       title
+                      product {
+                        title
+                      }
                       image {
                         url
                       }
