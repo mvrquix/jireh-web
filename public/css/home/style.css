@@ -928,10 +928,10 @@ body.min-height .homepage-4-slider-navigation.right{left: auto; right: -115px;}
 .homepage-5-slider .entry .text:before, .homepage-5-slider .entry .text:after{-webkit-transition:width 0.3s ease-out, height 0.3s ease-out, opacity 0s ease-out .3s; transition:width 0.3s ease-out, height 0.3s ease-out, opacity 0s ease-out .3s; opacity: 0;}
 .homepage-5-slider .entry .text:before{position: absolute; right: 0; top: 0; width: 0%; height: 0%; border-top: 1px rgba(255,255,255,.3) solid; border-right: 1px rgba(255,255,255,.3) solid; content: "";}
 .homepage-5-slider .entry .text:after{position: absolute; left: 0; bottom: 0; width: 0%; height: 0%; border-left: 1px rgba(255,255,255,.3) solid; border-bottom: 1px rgba(255,255,255,.3) solid; content: "";}
-.homepage-5-slider .entry:hover .text:before, .homepage-5-slider .entry:hover .text:after{width: 100%; height: 100%; opacity: 1; -webkit-transition:width 0.3s ease-out, height 0.3s ease-out, opacity 0s ease-out .3s; transition:width 0.3s ease-out, height 0.3s ease-out, opacity 0s ease-out 0s;}
+.homepage-5-slider .entry .text:before, .homepage-5-slider .entry .text:after{width: 100%; height: 100%; opacity: 1; -webkit-transition:width 0.3s ease-out, height 0.3s ease-out, opacity 0s ease-out .3s; transition:width 0.3s ease-out, height 0.3s ease-out, opacity 0s ease-out 0s;}
 .homepage-5-slider .entry .align{padding: 0 60px; position: absolute; width: 100%; left: 0; top: 50%; transform: translateY(-50%); -webkit-transform: translateY(-50%); z-index: 1;}
 .homepage-5-slider .entry .slide-title, .homepage-5-slider .entry .slide-description, .homepage-5-slider .entry .button-link{opacity: 0; transform: translateX(-50px); -webkit-transform: translateX(-50px); backface-visibility: hidden; -webkit-backface-visibility: hidden;}
-.homepage-5-slider .entry:hover .align *{opacity: 1; transform: translateX(0px); -webkit-transform: translateX(0px);}
+.homepage-5-slider .entry .align *{opacity: 1; transform: translateX(0px); -webkit-transform: translateX(0px);}
 .homepage-5-slider .swiper-button-prev{left: 30px;}
 .homepage-5-slider .swiper-button-next{right: 30px;}
 /* Tablets (>=768px)*/
