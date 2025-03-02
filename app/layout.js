@@ -33,7 +33,7 @@ function HomeLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <title>Jireh Atheltics</title>
+        <title>Jireh Athletics</title>
         <meta httpEquiv="content-type" content="text/html; charset=utf-8" />
         <meta name="format-detection" content="telephone=no" />
         <meta name="mobile-web-app-capable" content="yes" />
