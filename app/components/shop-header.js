@@ -35,6 +35,7 @@ import { useEventEmitter } from "../hooks/event-emitter-hook";
 
 export function ShopHeader() {
   const [cart, setCart] = useState(null);
+  const [cartDrawerOpen, setCartDrawerOpen] = useState(false)
   const { eventData } = useEventEmitter("cart-update");
 
   useEffect(() => {
@@ -42,7 +43,10 @@ export function ShopHeader() {
   }, []);
 
   useEffect(() => {
-    getCart();
+    if (eventData) {
+      getCart();
+      setCartDrawerOpen(true);
+    }
   }, [eventData]);
 
   const getCart = async () => {
@@ -80,7 +84,7 @@ export function ShopHeader() {
         />
       </a>
 
-      <DrawerRoot size="md">
+      <DrawerRoot open={cartDrawerOpen} onOpenChange={(e) => setCartDrawerOpen(e.open)} size="md">
         <DrawerBackdrop />
         <DrawerTrigger asChild>
           <Button variant="ghost" size="lg">
