@@ -141,7 +141,7 @@ async function createCart(productId, quantity) {
   cookieStore.set({
     name: "cart",
     value: cart["id"],
-    maxAge: 10 * 24 * 60 * 60, // 10 days
+    maxAge: 24 * 60 * 60, // 1 days
   });
 
   return true;

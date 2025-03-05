@@ -148,6 +148,7 @@ export function ShopHeader() {
               })}
           </DrawerBody>
           <DrawerFooter>
+            <Text>Your cart will last for 24 hours.</Text>
             {(cart && cart.lines.edges.length > 0)&& (
               <Button rounded="full" asChild>
                 <a href={cart.checkoutUrl}>Checkout</a>
