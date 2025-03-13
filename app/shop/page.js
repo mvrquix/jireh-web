@@ -20,7 +20,7 @@ export default function Shop() {
   return (
     <Container paddingTop="4" paddingBottom="4">
       {!products && (
-        <Stack gap="4" direction={{ base: "column", md: "row" }} wrap="wrap">
+        <Stack gap="4" direction={{ base: "column", md: "row", lg: "row" }} wrap="wrap">
           <Skeleton width={{base: "100%", md: "49%"}} height={{base: "298px", md: "505px"}} />
           <Skeleton width={{base: "100%", md: "49%"}} height={{base: "298px", md: "505px"}} />
           <Skeleton width={{base: "100%", md: "49%"}} height={{base: "298px", md: "505px"}} />
@@ -28,7 +28,7 @@ export default function Shop() {
         </Stack>
       )}
       {products && (
-        <Stack gap="4" direction={{ base: "column", md: "row" }} wrap="wrap">
+        <Stack gap="4" direction={{ base: "column", md: "row", lg: "row" }} wrap="wrap">
           {products.map((product) => {
             return (
               <ShopProductCard key={product.node.id} product={product.node} />

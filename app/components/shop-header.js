@@ -44,6 +44,7 @@ export function ShopHeader() {
 
   useEffect(() => {
     if (eventData) {
+      console.log(eventData)
       getCart();
       setCartDrawerOpen(true);
     }

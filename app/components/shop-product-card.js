@@ -14,7 +14,7 @@ export function ShopProductCard({ product }) {
 
   return (
     <Box
-      width={{ base: "100%", md: "49%" }}
+      width={{ base: "100%", md: "48%", lg: "49%" }}
       cursor="pointer"
       onClick={() => router.push(`/shop/${handle}`)}
     >

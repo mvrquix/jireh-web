@@ -46,10 +46,10 @@ export default function ShopProduct({ params }) {
       <Container>
         <Stack direction={{ base: "column", md: "row" }} wrap="wrap" gap="4">
           <Skeleton
-            width={{ base: "100%", md: "50%" }}
+            width={{ base: "100%", lg: "50%" }}
             height={{ base: "298px", md: "505px" }}
           />
-          <Box width={{ base: "100%", md: "48%" }}>
+          <Box width={{ base: "100%", lg: "48%" }}>
             <SkeletonText noOfLines="8" />
           </Box>
         </Stack>
@@ -73,7 +73,7 @@ export default function ShopProduct({ params }) {
       </BreadcrumbRoot>
       {product && (
         <Stack direction={{ base: "column", md: "row" }} wrap="wrap" gap="8">
-          <Box width={{ base: "100%", md: "49%" }}>
+          <Box width={{ base: "100%", lg: "48%" }}>
             <Stack wrap="wrap">
               <Image
                 src={selectedImage.node.url}
@@ -88,7 +88,7 @@ export default function ShopProduct({ params }) {
                     src={image.node.url}
                     onClick={() => setSelectedImage(image)}
                     rounded="md"
-                    height="100px"
+                    height={{base: "60px", md: "100px"}}
                     cursor="pointer"
                   />
                 ))}
@@ -96,7 +96,7 @@ export default function ShopProduct({ params }) {
             </Stack>
           </Box>
 
-          <Box width={{ base: "100%", md: "48%" }} paddingBottom="8">
+          <Box width={{ base: "100%", lg: "48%" }} paddingBottom="8">
             <Stack gap="8">
               <Heading size="2xl" fontWeight="bold">
                 {product.title}
@@ -107,7 +107,7 @@ export default function ShopProduct({ params }) {
               </Text>
               <Button
                 onClick={() => onAddToCartClick(variant.id)}
-                width="180px"
+                width={{base: "100%", lg: "180px"}}
                 size="md"
                 rounded="full"
               >
