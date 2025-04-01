@@ -4,7 +4,7 @@ import NextImage from 'next/image'
 
 export function ShopProductCard({ product }) {
   const router = useRouter();
-  const { id, handle, title, description, featuredImage, priceRange, variants } = product;
+  const { id, availableForSale, handle, title, description, featuredImage, priceRange, variants } = product;
   const variantId = variants.edges[0].node.id
   const currencyFormatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -25,7 +25,7 @@ export function ShopProductCard({ product }) {
         <Card.Body gap="2">
           <Card.Title mt="2">{title}</Card.Title>
           <Card.Description>
-            {formattedPrice}
+            {!availableForSale ? 'SOLD OUT' : formattedPrice}
           </Card.Description>
         </Card.Body>
       </Card.Root>

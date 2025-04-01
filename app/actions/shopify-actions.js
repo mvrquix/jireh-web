@@ -39,29 +39,30 @@ export async function fetchAllProducts() {
   const response = await sendRequest({
     query: `{
             products(sortKey: TITLE, first: 100) {
-                edges{
-                    node {
-                      id
-                      handle
-                      title
-                      description
-                      featuredImage {
-                        url
-                      }
-                      priceRange {
-                        minVariantPrice {
-                          amount
-                        }
-                      }
-                      variants(first: 1) {
-                        edges {
-                          node {
-                            id
-                          }
-                        }
+              edges{
+                node {
+                  id
+                  availableForSale
+                  handle
+                  title
+                  description
+                  featuredImage {
+                    url
+                  }
+                  priceRange {
+                    minVariantPrice {
+                      amount
+                    }
+                  }
+                  variants(first: 1) {
+                    edges {
+                      node {
+                        id
                       }
                     }
+                  }
                 }
+              }
             }
         }`,
   });
@@ -84,7 +85,7 @@ export async function fetchProductByHandle(handle) {
               }
             }
           }
-          variants(first: 1) {
+          variants(first: 10) {
             edges {
               node {
                 id
@@ -92,6 +93,23 @@ export async function fetchProductByHandle(handle) {
                   amount
                 }
               }
+            }
+          }
+          options(first: 10) {
+            id
+            name
+            optionValues {
+              firstSelectableVariant {
+                id
+                image {
+                  url
+                }
+                price {
+                  amount
+                }
+              }
+              id
+              name
             }
           }
         }

@@ -21,7 +21,7 @@ import { RiArrowGoBackFill } from "react-icons/ri";
 import { useEventEmitter } from "@/app/hooks/event-emitter-hook";
 
 export default function ShopProduct({ params }) {
-  params = use(params);
+  const { handle } = use(params);
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const { publishEvent } = useEventEmitter("cart-update");
@@ -31,7 +31,7 @@ export default function ShopProduct({ params }) {
   }, []);
 
   const getProductByHandle = async () => {
-    const result = await fetchProductByHandle(params.handle);
+    const result = await fetchProductByHandle(handle);
     setSelectedImage(result.images.edges[0]);
     setProduct(result);
   };
@@ -57,7 +57,7 @@ export default function ShopProduct({ params }) {
     );
   }
 
-  const { images, variants } = product;
+  const { images, variants, availableForSale } = product;
   const variant = variants.edges[0].node;
   const currencyFormatter = new Intl.NumberFormat("en-US", {
     style: "currency",
@@ -88,7 +88,7 @@ export default function ShopProduct({ params }) {
                     src={image.node.url}
                     onClick={() => setSelectedImage(image)}
                     rounded="md"
-                    height={{base: "60px", md: "100px"}}
+                    height={{ base: "60px", md: "100px" }}
                     cursor="pointer"
                   />
                 ))}
@@ -103,16 +103,18 @@ export default function ShopProduct({ params }) {
               </Heading>
               <Text>{product.description}</Text>
               <Text textStyle="xl">
-                {currencyFormatter.format(variant.price.amount)}
+                {!availableForSale ? 'SOLD OUT' : currencyFormatter.format(variant.price.amount)}
               </Text>
-              <Button
-                onClick={() => onAddToCartClick(variant.id)}
-                width={{base: "100%", lg: "180px"}}
-                size="md"
-                rounded="full"
-              >
-                Add To Cart
-              </Button>
+              {availableForSale && (
+                <Button
+                  onClick={() => onAddToCartClick(variant.id)}
+                  width={{ base: "100%", lg: "180px" }}
+                  size="md"
+                  rounded="full"
+                >
+                  Add To Cart
+                </Button>
+              )}
             </Stack>
           </Box>
         </Stack>
