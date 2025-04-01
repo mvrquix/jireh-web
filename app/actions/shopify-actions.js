@@ -75,6 +75,7 @@ export async function fetchProductByHandle(handle) {
       query($handle: String) {
         product(handle: $handle) {
           id
+          availableForSale
           title
           description
           images(first: 4) {
@@ -159,7 +160,7 @@ async function createCart(productId, quantity) {
   cookieStore.set({
     name: "cart",
     value: cart["id"],
-    maxAge: 24 * 60 * 60, // 1 days
+    maxAge: 60 * 60, // 1 hour
   });
 
   return true;
