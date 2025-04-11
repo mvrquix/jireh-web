@@ -93,6 +93,10 @@ export async function fetchProductByHandle(handle) {
                 price {
                   amount
                 }
+                selectedOptions {
+                  name
+                  value
+                }
               }
             }
           }
@@ -212,6 +216,9 @@ export async function fetchCart() {
                       price {
                         amount
                         currencyCode
+                      }
+                      selectedOptions {
+                        value
                       }
                     }
                   }

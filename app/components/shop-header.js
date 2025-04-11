@@ -119,6 +119,7 @@ export function ShopHeader() {
             {cart &&
               cart.lines.edges.map((c) => {
                 const { id, merchandise, quantity, cost } = c.node;
+                const { product, image, selectedOptions } = merchandise
                 return (
                   <Flex
                     key={id}
@@ -128,13 +129,13 @@ export function ShopHeader() {
                     marginBottom="8"
                   >
                     <Image
-                      src={merchandise.image.url}
+                      src={image.url}
                       rounded="md"
                       height="100px"
                       width="100px"
                     />
                     <Text>
-                      {merchandise.product.title}
+                      {product.title} ({selectedOptions && selectedOptions.map(o => o.value).join(",")})
                       <br />
                       {currencyFormatter.format(cost.totalAmount.amount)}
                     </Text>

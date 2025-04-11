@@ -8,8 +8,11 @@ import {
   Group,
   Heading,
   Image,
+  Select,
   Stack,
   Text,
+  createListCollection,
+  Portal,
 } from "@chakra-ui/react";
 import {
   addProductToCart,
@@ -24,6 +27,7 @@ export default function ShopProduct({ params }) {
   const { handle } = use(params);
   const [product, setProduct] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedOptions, setSelectedOptions] = useState([]);
   const { publishEvent } = useEventEmitter("cart-update");
 
   useEffect(() => {
@@ -36,9 +40,47 @@ export default function ShopProduct({ params }) {
     setProduct(result);
   };
 
-  const onAddToCartClick = async (id) => {
-    await addProductToCart(id, 1);
+  const onAddToCartClick = async () => {
+    const { variants } = product;
+    const hasOptions = variants.edges.length > 1;
+    const variant = hasOptions
+      ? variants.edges.find(
+          (edge) =>
+            JSON.stringify(edge.node.selectedOptions) ===
+            JSON.stringify(selectedOptions)
+        )
+      : variant.edges[0].node;
+    await addProductToCart(variant.node.id, 1);
     publishEvent({ data: true });
+  };
+
+  const onOptionChange = (option, value) => {
+    setSelectedOptions([...selectedOptions, { name: option, value: value[0] }]);
+  };
+
+  const mapOptionValueCollection = (optionValues) => {
+    return createListCollection({
+      items: optionValues.map((optionVal) => {
+        return {
+          label: optionVal.name,
+          value: optionVal.name,
+        };
+      }),
+    });
+  };
+
+  const validateSelectedOptions = () => {
+    const { variants, options } = product;
+    const hasOptions = variants.edges.length > 1;
+
+    if (!hasOptions) return true;
+
+    const optionNames = options.map((option) => option.name).join();
+    const selectedOptionNames = selectedOptions
+      .map((option) => option.name)
+      .join();
+
+    return optionNames === selectedOptionNames;
   };
 
   if (!product) {
@@ -57,12 +99,16 @@ export default function ShopProduct({ params }) {
     );
   }
 
-  const { images, variants, availableForSale } = product;
+  const { images, variants, availableForSale, options } = product;
+
   const variant = variants.edges[0].node;
+
   const currencyFormatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   });
+
+  const hasOptions = variants.edges.length > 1;
 
   return (
     <Container paddingTop="8">
@@ -102,12 +148,61 @@ export default function ShopProduct({ params }) {
                 {product.title}
               </Heading>
               <Text>{product.description}</Text>
+
+              {hasOptions &&
+                options.map((option) => {
+                  const values = mapOptionValueCollection(option.optionValues);
+                  return (
+                    <Select.Root
+                      key={option.name}
+                      value={selectedOptions?.find(
+                        (o) => o.name === option.name
+                      )}
+                      onValueChange={(e) =>
+                        onOptionChange(option.name, e.value)
+                      }
+                      collection={values}
+                      size="sm"
+                      width="320px"
+                    >
+                      <Select.Label>{option.name}</Select.Label>
+                      <Select.Control>
+                        <Select.Trigger>
+                          <Select.ValueText
+                            placeholder={`Select ${option.name}`}
+                          />
+                        </Select.Trigger>
+                        <Select.IndicatorGroup>
+                          <Select.Indicator />
+                        </Select.IndicatorGroup>
+                      </Select.Control>
+                      <Portal>
+                        <Select.Positioner>
+                          <Select.Content>
+                            {values.items.map((item) => {
+                              return (
+                                <Select.Item key={item.value} item={item}>
+                                  {item.label}
+                                  <Select.ItemIndicator />
+                                </Select.Item>
+                              );
+                            })}
+                          </Select.Content>
+                        </Select.Positioner>
+                      </Portal>
+                    </Select.Root>
+                  );
+                })}
+
               <Text textStyle="xl">
-                {!availableForSale ? 'SOLD OUT' : currencyFormatter.format(variant.price.amount)}
+                {!availableForSale
+                  ? "SOLD OUT"
+                  : currencyFormatter.format(variant.price.amount)}
               </Text>
               {availableForSale && (
                 <Button
-                  onClick={() => onAddToCartClick(variant.id)}
+                  onClick={() => onAddToCartClick()}
+                  disabled={!validateSelectedOptions()}
                   width={{ base: "100%", lg: "180px" }}
                   size="md"
                   rounded="full"
