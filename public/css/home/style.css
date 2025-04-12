@@ -147,7 +147,7 @@ body ::-moz-selection {color: white; background: black;}
 .hidden{display: none!important;}
 .visible{display: block!important;}
 .inline-indent{width: 10px; height: 1px; background: currentColor; display: inline-block; vertical-align: middle; margin-right: 10px; position: relative; top: -1px;}
-.fixed-background{background-size: cover; background-position: right; background-attachment: fixed;}
+.fixed-background{background-size: cover; background-position: center; background-attachment: fixed;}
 body.mobile .fixed-background{background-attachment: scroll;}
 .label{white-space: normal;}
 /*loader*/
@@ -367,9 +367,9 @@ header.border-bottom{border-bottom: 1px #e3e3e3 solid;}
 .logo{display: inline-block; height: 50px; line-height: 50px; margin-top: -10px; position: relative; top: 10px; vertical-align: bottom;}
 .logo img{display: inline-block; vertical-align: middle; height: 100px; width: 100px; top: 10px; position: relative;}
 .logo.responsive{display: none; position: absolute; left: 15px; top: 10px;}
-.navigation-wrapper{display: inline-block; margin-right: 65px;background:rgba(0,0,0,.15);padding-left:10px;padding-right:10px;}
+.navigation-wrapper{display: inline-block; margin-right: 65px;background:rgba(0,0,0);padding-left:10px;padding-right:10px;}
 .navigation-wrapper:last-child{margin-right: 0;}
-nav{display: block; position: relative; z-index: 1; top: 3px;}
+nav{display: block; position: relative; z-index: 1;}
 @media (min-width: 992px) {
 	nav li{float: left; position: relative;}
 	nav>ul>li:not(:last-child){margin-right: 65px;}
@@ -918,7 +918,7 @@ body.min-height .homepage-4-slider-navigation.right{left: auto; right: -115px;}
 /*-------------------------------------------------------------------------------------------------------------------------------*/
 /* 11 - HOMEPAGE 5 */
 /*-------------------------------------------------------------------------------------------------------------------------------*/
-.homepage-5-container, .homepage-5-slider{position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: #1e1e1e;}
+.homepage-5-container, .homepage-5-slider{position: relative; width: 100%; height: 100%; background: #1e1e1e;}
 .homepage-5-slider .swiper-container{height: 100%;}
 .tilt {overflow: hidden; position: absolute; width: 100%; height: 100%; left: 0; top: 0;}
 .tilt__back, .tilt__front {width: 100%; height: 100%; background-position: 50% 50%; background-repeat: no-repeat; background-size: cover; -webkit-backface-visibility: hidden; backface-visibility: hidden; position: absolute; top: 0; left: 0; -webkit-transition:all 0.15s ease-out; transition:all 0.15s ease-out;}

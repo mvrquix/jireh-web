@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function LandingHeader() {
   return (
-    <header className="type-4 light fixed">
+    <header className="type-4 light fixed" style={{zIndex: '100'}}>
       <div className="wide-container-fluid">
         <div className="row">
           <div className="col-xs-6 col-sm-2"></div>

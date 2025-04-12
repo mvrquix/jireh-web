@@ -14,12 +14,12 @@ export function ShopProductCard({ product }) {
 
   return (
     <Box
-      width={{ base: "100%", md: "48%", lg: "49%" }}
+      width={{ base: "100%", md: "32%", lg: "32%" }}
       cursor="pointer"
       onClick={() => router.push(`/shop/${handle}`)}
     >
       <Card.Root width="100%" border="0">
-        <Image asChild>
+        <Image width="674px" height="370px" fit="contain" asChild>
           <NextImage src={featuredImage.url} alt={title} width={674} height={505} style={{width: "100%"}} />
         </Image>
         <Card.Body gap="2">
