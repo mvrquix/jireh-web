@@ -35,6 +35,9 @@ export default function Shop() {
   const pants = products.filter((p) =>
     p.node.title.toLowerCase().includes("pants")
   );
+  const shorts = products.filter((p) =>
+    p.node.title.toLowerCase().includes("shorts")
+  );
 
   return (
     <Container paddingTop="4" paddingBottom="4">
@@ -115,6 +118,22 @@ export default function Shop() {
               wrap="wrap"
             >
               {pants.map((product) => {
+                return (
+                  <ShopProductCard
+                    key={product.node.id}
+                    product={product.node}
+                  />
+                );
+              })}
+            </Stack>
+          )}
+          {shorts.length > 0 && (
+            <Stack
+              gap="4"
+              direction={{ base: "column", md: "row", lg: "row" }}
+              wrap="wrap"
+            >
+              {shorts.map((product) => {
                 return (
                   <ShopProductCard
                     key={product.node.id}
