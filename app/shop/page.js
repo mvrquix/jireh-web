@@ -63,22 +63,6 @@ export default function Shop() {
       )}
       {products && (
         <Stack gap="8" separator={<StackSeparator />}>
-          {snapBacks && (
-            <Stack
-              gap="4"
-              direction={{ base: "column", md: "row", lg: "row" }}
-              wrap="wrap"
-            >
-              {snapBacks.map((product) => {
-                return (
-                  <ShopProductCard
-                    key={product.node.id}
-                    product={product.node}
-                  />
-                );
-              })}
-            </Stack>
-          )}
           {tShirts.length > 0 && (
             <Stack
               gap="4"
@@ -134,6 +118,22 @@ export default function Shop() {
               wrap="wrap"
             >
               {shorts.map((product) => {
+                return (
+                  <ShopProductCard
+                    key={product.node.id}
+                    product={product.node}
+                  />
+                );
+              })}
+            </Stack>
+          )}
+          {snapBacks && (
+            <Stack
+              gap="4"
+              direction={{ base: "column", md: "row", lg: "row" }}
+              wrap="wrap"
+            >
+              {snapBacks.map((product) => {
                 return (
                   <ShopProductCard
                     key={product.node.id}
