@@ -48,7 +48,10 @@ function HomeLayout({ children }) {
           content="Jireh Athletics is not just about athletics—it’s about inspiring others to live out their faith boldly and unapologetically."
         />
 
-        <meta property="og:image" content="https://github.com/mvrquix/jireh-web/blob/main/public/img/home/logo-black-with-bg.png?raw=true" />
+        <meta
+          property="og:image"
+          content="https://github.com/mvrquix/jireh-web/blob/main/public/img/home/logo-black-with-bg.png?raw=true"
+        />
 
         <meta property="og:url" content="https://www.jirehathletics.com" />
         <link
@@ -70,66 +73,61 @@ function HomeLayout({ children }) {
         />
         <link rel="manifest" href="/favicon/site.webmanifest" />
         <link
-          href="https://fonts.googleapis.com/css?family=Inconsolata:400,700"
+          href="https://fonts.googleapis.com/css?family=Montserrat"
           rel="stylesheet"
-          type="text/css"
-        />
-        <link
-          href="https://fonts.googleapis.com/css?family=Montserrat:400,700"
-          rel="stylesheet"
-          type="text/css"
-        />
-        <link
-          href="https://fonts.googleapis.com/css?family=Droid+Serif:400italic,700italic"
-          rel="stylesheet"
-          type="text/css"
         />
 
         <link
-          href="/css/home/bootstrap.min.css"
           rel="stylesheet"
-          type="text/css"
+          href="assets/vendor/fontawesome-5.14.0.min.css"
         />
+
         <link
-          href="/css/home/bootstrap.extension.css"
           rel="stylesheet"
-          type="text/css"
+          href="assets/vendor/bootstrap/css/bootstrap.min.css"
         />
+
         <link
-          href="/css/home/font-awesome.min.css"
           rel="stylesheet"
-          type="text/css"
+          href="assets/vendor/magnific-popup/css/magnific-popup.min.css"
         />
-        <link href="/css/home/style.css" rel="stylesheet" type="text/css" />
-        <link href="/css/home/swiper.css" rel="stylesheet" type="text/css" />
+
         <link
-          href="/css/home/simplelightbox.css"
           rel="stylesheet"
-          type="text/css"
+          href="assets/vendor/nice-select/css/nice-select.min.css"
         />
+
+        <link rel="stylesheet" href="assets/vendor/animate.min.css" />
+
+        <link rel="stylesheet" href="assets/vendor/slick/css/slick.min.css" />
+
+        <link rel="stylesheet" href="assets/css/style.css" />
       </head>
-      <body className="fonts-8">
-        <div id="loader-wrapper"></div>
-        <div id="content-block">
+      <body>
+        <div className="page-wrapper">
           <LandingHeader />
           {children}
           <LandingFooter />
         </div>
+        <Script src="assets/vendor/jquery-3.7.1.min.js" strategy="beforeInteractive"></Script>
 
-        <Script
-          src="js/home/jquery-2.1.4.min.js"
-          strategy="beforeInteractive"
-        />
-        <Script
-          src="js/home/swiper.jquery.min.js"
-          strategy="beforeInteractive"
-        />
-        <Script
-          src="js/home/jquery.mousewheel.min.js"
-          strategy="beforeInteractive"
-        />
-        <Script src="js/home/global.js" />
-        <Script src="js/home/tiltfx.js" />
+        <Script src="assets/vendor/bootstrap/js/popper.min.js" strategy="beforeInteractive"></Script>
+
+        <Script src="assets/vendor/bootstrap/js/bootstrap.min.js" strategy="beforeInteractive"></Script>
+
+        <Script src="assets/vendor/appear.min.js" strategy="beforeInteractive"></Script>
+
+        <Script src="assets/vendor/slick/js/slick.min.js" strategy="beforeInteractive"></Script>
+
+        <Script src="assets/vendor/magnific-popup/js/jquery.magnific-popup.min.js" strategy="beforeInteractive"></Script>
+
+        <Script src="assets/vendor/nice-select/js/jquery.nice-select.min.js" strategy="beforeInteractive"></Script>
+
+        <Script src="assets/vendor/imagesloaded.pkgd.min.js" strategy="beforeInteractive"></Script>
+
+        <Script src="assets/vendor/isotope.pkgd.min.js" strategy="beforeInteractive"></Script>
+        <Script src="assets/vendor/wow.min.js" strategy="beforeInteractive"></Script>
+        <Script src="assets/js/script.js"></Script>
       </body>
     </html>
   );
