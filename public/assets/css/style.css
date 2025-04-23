@@ -3428,7 +3428,7 @@ header form.search-form button{
   float: right;
   cursor: pointer;
   padding: 5px 14px;
-  background: var(--primary-color);
+  background: #ff0000;
 }
 
 .main-menu .navbar-header .navbar-toggle .icon-bar {
@@ -4377,7 +4377,7 @@ header form.search-form button{
 
 .pro-title{
   background: var(--black-120);
-  padding: 64px;
+  padding: 10px;
   text-align: right;
 }
 
@@ -4416,14 +4416,14 @@ header form.search-form button{
 .apartment-content{
   margin-right: 120px;
   margin-left: 120px;
-  margin-top: -128px;
+  margin-top: -60px;
 }
 
 
 @media only screen and (max-width: 1199px) {
   .pro-title,
   .pro-desc{
-    padding:64px 32px;
+    padding:5px;
   }
 
   .pro-title-haft,
@@ -4443,7 +4443,7 @@ header form.search-form button{
   .pro-title-haft,
   .pro-desc-haft{
     text-align: left;
-    padding:64px;
+    padding:5x;
   }
 
   .architecture-area .tab-content .pr-64{
@@ -4460,7 +4460,7 @@ header form.search-form button{
   .pro-desc,
   .pro-title-haft,
   .pro-desc-haft{
-    padding: 64px 32px;
+    padding: 5px;
   }
 
   .apartment-content {
@@ -4474,7 +4474,7 @@ header form.search-form button{
   .pro-desc,
   .pro-title-haft,
   .pro-desc-haft{
-    padding: 32px;
+    padding: 5px;
   }
 
   .pro-desc{
@@ -6163,15 +6163,15 @@ button.read-more{
 }
 
 .primary-readmore{
-  background: var(--primary-color);
-  color: var(--black-100);
+  background: #ff0000;
+  color: #fff;
   padding: 16px 32px;
   margin-top: 32px;
 }
 
 .primary-readmore:hover{
   background: var(--black-100);
-  color: var(--primary-color);
+  color: #ff0000;
 }
 
 .blog-content .left{

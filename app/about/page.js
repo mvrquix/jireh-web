@@ -33,7 +33,7 @@ export default function About() {
                 />
                 <img
                   className="hovershow"
-                  src="assets/images/about/hover.png"
+                  src="img/about/about-1.jpg"
                   alt="about image"
                 />
               </div>

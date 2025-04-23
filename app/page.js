@@ -10,14 +10,14 @@ export default function Home() {
         <div className="tab-content tab-pane project-active">
           <div className="col-lg-12 item ARCHITECTURE LANDSCAPE">
             <div className="row apartment-image wow fadeInLeft delay-0-1s">
-              <a href="#">
+              <a href="/shop">
                 <img src="/img/home/home-5.jpg" />
               </a>
             </div>
             <div className="row apartment-content wow fadeInRight delay-0-1s rp-0">
               <div className="col-lg-6 pro-title">
                 <a href="/shop">
-                  <h5>SHOP GENESIS COLLECTION</h5>
+                  <h6 style={{fontSize: '19px'}}>SHOP THE GENESIS COLLECTION</h6>
                 </a>
               </div>
             </div>
@@ -56,7 +56,7 @@ export default function Home() {
               onClick={() => router.push("/about")}
               className="loadmore primary-readmore mt-0"
             >
-              ABOUT JIREH
+              ABOUT JIREH ATHLETICS
             </button>
           </div>
         </div>
