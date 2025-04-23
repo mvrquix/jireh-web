@@ -10,8 +10,8 @@ export default function Home() {
         <div className="tab-content tab-pane project-active">
           <div className="col-lg-12 item ARCHITECTURE LANDSCAPE">
             <div className="row apartment-image wow fadeInLeft delay-0-1s">
-              <a href="project-details.html">
-                <img src="/img/home/home-5.jpg" alt="Apartment" />
+              <a href="#">
+                <img src="/img/home/home-5.jpg" />
               </a>
             </div>
             <div className="row apartment-content wow fadeInRight delay-0-1s rp-0">
@@ -24,29 +24,29 @@ export default function Home() {
           </div>
           <div className="col-lg-6 item ARCHITECTURE">
             <div className="row apartment-image wow fadeInLeft delay-0-1s">
-              <a href="project-details.html">
-                <img src="/img/home/home-4.jpg" alt="Apartment" />
+              <a href="#">
+                <img src="/img/home/home-4.jpg" />
               </a>
             </div>
           </div>
           <div className="col-lg-6 item INTERIOR">
             <div className="row apartment-image wow fadeInLeft delay-0-1s">
-              <a href="project-details.html">
-                <img src="img/home/home-2.jpg" alt="Apartment" />
+              <a href="#">
+                <img src="img/home/home-2.jpg" />
               </a>
             </div>
           </div>
           <div className="col-lg-6 item ARCHITECTURE">
             <div className="row apartment-image wow fadeInLeft delay-0-1s">
-              <a href="project-details.html">
-                <img src="img/home/home-3.jpg" alt="Apartment" />
+              <a href="#">
+                <img src="img/home/home-3.jpg" />
               </a>
             </div>
           </div>
           <div className="col-lg-6 item INTERIOR">
             <div className="row apartment-image wow fadeInLeft delay-0-1s">
-              <a href="project-details.html">
-                <img src="img/home/home-1.jpg" alt="Apartment" />
+              <a href="#">
+                <img src="img/home/home-1.jpg" />
               </a>
             </div>
           </div>
