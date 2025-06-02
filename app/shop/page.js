@@ -23,8 +23,8 @@ export default function Shop() {
     setProducts(result);
   };
 
-  const snapBacks = products.filter((p) =>
-    p.node.title.toLowerCase().includes("snapback")
+  const hats = products.filter((p) =>
+    p.node.title.toLowerCase().includes("snapback") || p.node.title.toLowerCase().includes("strapback")
   );
   const tShirts = products.filter((p) =>
     p.node.title.toLowerCase().includes("t-shirt")
@@ -127,13 +127,13 @@ export default function Shop() {
               })}
             </Stack>
           )}
-          {snapBacks && (
+          {hats && (
             <Stack
               gap="4"
               direction={{ base: "column", md: "row", lg: "row" }}
               wrap="wrap"
             >
-              {snapBacks.map((product) => {
+              {hats.map((product) => {
                 return (
                   <ShopProductCard
                     key={product.node.id}
