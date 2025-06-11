@@ -49,7 +49,7 @@ export default function ShopProduct({ params }) {
             JSON.stringify(edge.node.selectedOptions) ===
             JSON.stringify(selectedOptions)
         )
-      : variant.edges[0].node;
+      : variants.edges[0];
     await addProductToCart(variant.node.id, 1);
     publishEvent({ data: true });
   };
