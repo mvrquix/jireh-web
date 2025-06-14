@@ -13,6 +13,8 @@ import {
   Text,
   createListCollection,
   Portal,
+  Progress,
+  Flex,
 } from "@chakra-ui/react";
 import {
   addProductToCart,
@@ -33,6 +35,10 @@ export default function ShopProduct({ params }) {
   useEffect(() => {
     getProductByHandle();
   }, []);
+
+  useEffect(() => {
+    if (window.rtsJs) window.rtsJs.m();
+  }, [product]);
 
   const getProductByHandle = async () => {
     const result = await fetchProductByHandle(handle);
@@ -85,17 +91,15 @@ export default function ShopProduct({ params }) {
 
   if (!product) {
     return (
-      <Container>
-        <Stack direction={{ base: "column", md: "row" }} wrap="wrap" gap="4">
-          <Skeleton
-            width={{ base: "100%", lg: "50%" }}
-            height={{ base: "298px", md: "505px" }}
-          />
-          <Box width={{ base: "100%", lg: "48%" }}>
-            <SkeletonText noOfLines="8" />
-          </Box>
-        </Stack>
-      </Container>
+      <div className="container-fluid">
+        <Flex justify="center" align="center" height="500px">
+          <Progress.Root width="360px" value={null}>
+            <Progress.Track>
+              <Progress.Range />
+            </Progress.Track>
+          </Progress.Root>
+        </Flex>
+      </div>
     );
   }
 
@@ -111,7 +115,11 @@ export default function ShopProduct({ params }) {
   const hasOptions = variants.edges.length > 1;
 
   return (
-    <Container paddingTop="8">
+    <Container
+      paddingTop="15px"
+      paddingBottom="25px"
+      style={{ minHeight: "100vh" }}
+    >
       <BreadcrumbRoot style={{ marginBottom: "25px" }}>
         <BreadcrumbLink href="/shop">
           <RiArrowGoBackFill /> Back to Shop
@@ -144,10 +152,12 @@ export default function ShopProduct({ params }) {
 
           <Box width={{ base: "100%", lg: "48%" }} paddingBottom="8">
             <Stack gap="8">
-              <Heading size="2xl" fontWeight="bold">
+              <Heading size="xl" fontWeight="bold" color={"black"}>
                 {product.title}
               </Heading>
-              <Text>{product.description}</Text>
+              <Text
+                dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+              ></Text>
 
               {hasOptions &&
                 options.map((option) => {
@@ -162,7 +172,7 @@ export default function ShopProduct({ params }) {
                         onOptionChange(option.name, e.value)
                       }
                       collection={values}
-                      size="sm"
+                      size="lg"
                       width="320px"
                     >
                       <Select.Label>{option.name}</Select.Label>
@@ -194,18 +204,22 @@ export default function ShopProduct({ params }) {
                   );
                 })}
 
-              <Text textStyle="xl">
+              <h5 class="title" style={{color: "#000"}}>
                 {!availableForSale
                   ? "SOLD OUT"
                   : currencyFormatter.format(variant.price.amount)}
-              </Text>
+              </h5>
               {availableForSale && (
                 <Button
                   onClick={() => onAddToCartClick()}
                   disabled={!validateSelectedOptions()}
                   width={{ base: "100%", lg: "180px" }}
-                  size="md"
+                  size="lg"
+                  color="white"
+                  backgroundColor="black"
                   rounded="full"
+                  paddingTop="25px"
+                  paddingBottom="25px"
                 >
                   Add To Cart
                 </Button>

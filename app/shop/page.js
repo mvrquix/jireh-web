@@ -1,18 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  Container,
-  Separator,
-  Skeleton,
-  Stack,
-  StackSeparator,
-} from "@chakra-ui/react";
+import NextImage from "next/image";
+import { Flex, Image, Progress, Skeleton } from "@chakra-ui/react";
 import { fetchAllProducts } from "../actions/shopify-actions";
 import { ShopProductCard } from "../components/shop-product-card";
+import Script from "next/script";
+import { useRouter } from "next/navigation";
 
 export default function Shop() {
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const router = useRouter();
 
   useEffect(() => {
     getAllProducts();
@@ -23,128 +22,141 @@ export default function Shop() {
     setProducts(result);
   };
 
-  const hats = products.filter((p) =>
-    p.node.title.toLowerCase().includes("snapback") || p.node.title.toLowerCase().includes("strapback")
-  );
-  const tShirts = products.filter((p) =>
-    p.node.title.toLowerCase().includes("t-shirt")
-  );
-  const crewNecks = products.filter((p) =>
-    p.node.title.toLowerCase().includes("crewneck")
-  );
-  const pants = products.filter((p) =>
-    p.node.title.toLowerCase().includes("pants")
-  );
-  const shorts = products.filter((p) =>
-    p.node.title.toLowerCase().includes("shorts")
-  );
+  const getProductCategory = (title) => {
+    if (
+      title.toLowerCase().includes("snapback") ||
+      title.toLowerCase().includes("strapback")
+    )
+      return "hat";
+    if (title.toLowerCase().includes("t-shirt")) return "shirt";
+    if (title.toLowerCase().includes("crewneck")) return "crewneck";
+    if (title.toLowerCase().includes("pants")) return "pants";
+    if (title.toLowerCase().includes("shorts")) return "shorts";
+  };
+
+  if (!products) {
+    return (
+      <div className="container-fluid">
+        <Flex justify="center" align="center" height="500px">
+          <Progress.Root width="360px" value={null}>
+            <Progress.Track>
+              <Progress.Range />
+            </Progress.Track>
+          </Progress.Root>
+        </Flex>
+      </div>
+    );
+  }
+
+  const selectedProducts =
+    selectedCategory === "all"
+      ? products
+      : products.filter(
+          (p) => getProductCategory(p.node.title) === selectedCategory
+        );
 
   return (
-    <Container paddingTop="4" paddingBottom="4">
-      {products.length === 0 && (
-        <Stack
-          gap="4"
-          direction={{ base: "column", md: "row", lg: "row" }}
-          wrap="wrap"
-        >
-          <Skeleton
-            width={{ base: "100%", md: "32%" }}
-            height={{ base: "298px", md: "305px" }}
-          />
-          <Skeleton
-            width={{ base: "100%", md: "32%" }}
-            height={{ base: "298px", md: "305px" }}
-          />
-          <Skeleton
-            width={{ base: "100%", md: "32%" }}
-            height={{ base: "298px", md: "305px" }}
-          />
-        </Stack>
-      )}
-      {products && (
-        <Stack gap="8" separator={<StackSeparator />}>
-          {tShirts.length > 0 && (
-            <Stack
-              gap="4"
-              direction={{ base: "column", md: "row", lg: "row" }}
-              wrap="wrap"
+    <div className="rts-portfolio-grid-area rts-section-gapBottom masonry">
+      <div className="main-isotop">
+        <div className="container">
+          <div className="button-group filters-button-group style-1">
+            <button
+              onClick={() => setSelectedCategory("all")}
+              className={`button ${selectedCategory === "all" && "is-checked"}`}
+              data-filter="*"
             >
-              {tShirts.map((product) => {
+              All
+            </button>
+            <button
+              onClick={() => setSelectedCategory("hat")}
+              className={`button ${selectedCategory === "hat" && "is-checked"}`}
+              data-filter=".hat"
+            >
+              Hats
+            </button>
+            <button
+              onClick={() => setSelectedCategory("shirt")}
+              className={`button ${selectedCategory === "shirt" && "is-checked"}`}
+              data-filter=".shirt"
+            >
+              T-shirts
+            </button>
+            <button
+              onClick={() => setSelectedCategory("crewneck")}
+              className={`button ${selectedCategory === "crewneck" && "is-checked"}`}
+              data-filter=".crewneck"
+            >
+              Crewnecks
+            </button>
+            <button
+              onClick={() => setSelectedCategory("pants")}
+              className={`button ${selectedCategory === "pants" && "is-checked"}`}
+              data-filter=".pants"
+            >
+              Pants
+            </button>
+            <button
+              onClick={() => setSelectedCategory("shorts")}
+              className={`button ${selectedCategory === "shorts" && "is-checked"}`}
+              data-filter=".shorts"
+            >
+              Shorts
+            </button>
+          </div>
+
+          <div className="row">
+            {selectedProducts &&
+              selectedProducts.map((product) => {
+                const {
+                  id,
+                  availableForSale,
+                  handle,
+                  title,
+                  featuredImage,
+                  priceRange,
+                  variants,
+                } = product.node;
+                const variantId = variants.edges[0].node.id;
+                const currencyFormatter = new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                });
+                const formattedPrice = currencyFormatter.format(
+                  priceRange.minVariantPrice.amount
+                );
+                const category = getProductCategory(title);
                 return (
-                  <ShopProductCard
-                    key={product.node.id}
-                    product={product.node}
-                  />
+                  <div
+                    key={id}
+                    className={`col-lg-4 element-item ${category}`}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <div className="signle-portfolio-style-four-inner ptb--20">
+                      <a
+                        onClick={() => router.push(`/shop/${handle}`)}
+                        className="thumbnail"
+                      >
+                        <NextImage
+                          src={featuredImage.url}
+                          alt={title}
+                          width={610}
+                          height={330}
+                          style={{ width: "100%" }}
+                        />
+                      </a>
+                      <div className="inner-content">
+                        {!availableForSale && <span> Sold out</span> }
+                        <a onClick={() => router.push(`/shop/${handle}`)}>
+                          <h5 className="name">{title}</h5>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                 );
               })}
-            </Stack>
-          )}
-          {crewNecks.length > 0 && (
-            <Stack
-              gap="4"
-              direction={{ base: "column", md: "row", lg: "row" }}
-              wrap="wrap"
-            >
-              {crewNecks.map((product) => {
-                return (
-                  <ShopProductCard
-                    key={product.node.id}
-                    product={product.node}
-                  />
-                );
-              })}
-            </Stack>
-          )}
-          {pants.length > 0 && (
-            <Stack
-              gap="4"
-              direction={{ base: "column", md: "row", lg: "row" }}
-              wrap="wrap"
-            >
-              {pants.map((product) => {
-                return (
-                  <ShopProductCard
-                    key={product.node.id}
-                    product={product.node}
-                  />
-                );
-              })}
-            </Stack>
-          )}
-          {shorts.length > 0 && (
-            <Stack
-              gap="4"
-              direction={{ base: "column", md: "row", lg: "row" }}
-              wrap="wrap"
-            >
-              {shorts.map((product) => {
-                return (
-                  <ShopProductCard
-                    key={product.node.id}
-                    product={product.node}
-                  />
-                );
-              })}
-            </Stack>
-          )}
-          {hats && (
-            <Stack
-              gap="4"
-              direction={{ base: "column", md: "row", lg: "row" }}
-              wrap="wrap"
-            >
-              {hats.map((product) => {
-                return (
-                  <ShopProductCard
-                    key={product.node.id}
-                    product={product.node}
-                  />
-                );
-              })}
-            </Stack>
-          )}
-        </Stack>
-      )}
-    </Container>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

@@ -1,37 +1,15 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { Provider } from "@/components/ui/provider";
 import Script from "next/script";
-import { Theme } from "@chakra-ui/react";
-import { ShopHeader } from "./components/shop-header";
-import LandingHeader from "./components/landing-header";
-import LandingFooter from "./components/landing-footer";
+import Header from "./components/landing-header";
+import Footer from "./components/landing-footer";
 
 export default function RootLayout({ children }) {
-  const pathname = usePathname();
 
-  if (pathname.startsWith("/shop")) {
-    return (
-      <html lang="en" suppressHydrationWarning>
-        <body>
-          <Provider>
-            <Theme appearance="dark">
-              <ShopHeader />
-              {children}
-            </Theme>
-          </Provider>
-        </body>
-      </html>
-    );
-  }
 
-  return <HomeLayout children={children} />;
-}
-
-function HomeLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <title>Jireh Athletics</title>
         <meta httpEquiv="content-type" content="text/html; charset=utf-8" />
@@ -54,80 +32,114 @@ function HomeLayout({ children }) {
         />
 
         <meta property="og:url" content="https://www.jirehathletics.com" />
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/favicon/apple-touch-icon.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/favicon/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/favicon/favicon-16x16.png"
-        />
-        <link rel="manifest" href="/favicon/site.webmanifest" />
-        <link
-          href="https://fonts.googleapis.com/css?family=Montserrat"
-          rel="stylesheet"
-        />
 
-        <link
-          rel="stylesheet"
-          href="assets/vendor/fontawesome-5.14.0.min.css"
-        />
-
-        <link
-          rel="stylesheet"
-          href="assets/vendor/bootstrap/css/bootstrap.min.css"
-        />
-
-        <link
-          rel="stylesheet"
-          href="assets/vendor/magnific-popup/css/magnific-popup.min.css"
-        />
-
-        <link
-          rel="stylesheet"
-          href="assets/vendor/nice-select/css/nice-select.min.css"
-        />
-
-        <link rel="stylesheet" href="assets/vendor/animate.min.css" />
-
-        <link rel="stylesheet" href="assets/vendor/slick/css/slick.min.css" />
-
-        <link rel="stylesheet" href="assets/css/style.css" />
+        <link rel="stylesheet" href="/assets/css/plugins/fontawesome-6.css" />
+        <link rel="stylesheet" href="/assets/css/plugins/swiper.min.css" />
+        <link rel="stylesheet" href="/assets/css/vendor/metismenu.css" />
+        <link rel="stylesheet" href="/assets/css/plugins/animate.min.css" />
+        <link rel="stylesheet" href="/assets/css/vendor/bootstrap.min.css" />
+        <link rel="stylesheet" href="/assets/css/style.css" />
       </head>
-      <body>
-        <div className="page-wrapper">
-          <LandingHeader />
-          {children}
-          <LandingFooter />
-        </div>
-        <Script src="assets/vendor/jquery-3.7.1.min.js" strategy="beforeInteractive"></Script>
+      <body className="smooth-scroll">
+        <Provider>
+          <Header />
+          <div className="main-content-wrapper">{children}</div>
+          <Footer />
+          <div className="progress-wrap">
+            <svg
+              className="progress-circle svg-content"
+              width="100%"
+              height="100%"
+              viewBox="-1 -1 102 102"
+            >
+              <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"></path>
+            </svg>
+          </div>
+        </Provider>
 
-        <Script src="assets/vendor/bootstrap/js/popper.min.js" strategy="beforeInteractive"></Script>
+        <Script
+          src="/assets/js/vendor/jquery.min.js"
+          strategy="beforeInteractive"
+        ></Script>
 
-        <Script src="assets/vendor/bootstrap/js/bootstrap.min.js" strategy="beforeInteractive"></Script>
+        <Script
+          src="/assets/js/plugins/bootstrap.min.js"
+          strategy="beforeInteractive"
+        ></Script>
 
-        <Script src="assets/vendor/appear.min.js" strategy="beforeInteractive"></Script>
+        <Script
+          src="/assets/js/vendor/waypoint.js"
+          strategy="beforeInteractive"
+        ></Script>
 
-        <Script src="assets/vendor/slick/js/slick.min.js" strategy="beforeInteractive"></Script>
+        <Script
+          src="/assets/js/plugins/swiper.js"
+          strategy="beforeInteractive"
+        ></Script>
 
-        <Script src="assets/vendor/magnific-popup/js/jquery.magnific-popup.min.js" strategy="beforeInteractive"></Script>
+        <Script
+          src="/assets/js/plugins/resizer-sensor.js"
+          strategy="beforeInteractive"
+        ></Script>
 
-        <Script src="assets/vendor/nice-select/js/jquery.nice-select.min.js" strategy="beforeInteractive"></Script>
+        <Script
+          src="/assets/js/plugins/sticky-sidebar.js"
+          strategy="beforeInteractive"
+        ></Script>
 
-        <Script src="assets/vendor/imagesloaded.pkgd.min.js" strategy="beforeInteractive"></Script>
-
-        <Script src="assets/vendor/isotope.pkgd.min.js" strategy="beforeInteractive"></Script>
-        <Script src="assets/vendor/wow.min.js" strategy="beforeInteractive"></Script>
-        <Script src="assets/js/script.js"></Script>
+        <Script
+          src="/assets/js/plugins/isotop.js"
+          strategy="beforeInteractive"
+        ></Script>
+        <Script
+          src="/assets/js/plugins/imagesloaded.pkgd.min.js"
+          strategy="beforeInteractive"
+        ></Script>
+        <Script
+          src="/assets/js/plugins/smoothscroll-varticle.js"
+          strategy="beforeInteractive"
+        ></Script>
+        <Script
+          src="/assets/js/vendor/gsap.js"
+          strategy="beforeInteractive"
+        ></Script>
+        <Script
+          src="/assets/js/plugins/scrolltiger.js"
+          strategy="beforeInteractive"
+        ></Script>
+        <Script
+          src="/assets/js/plugins/scrolltoplugin.js"
+          strategy="beforeInteractive"
+        ></Script>
+        <Script
+          src="/assets/js/plugins/splittext.js"
+          strategy="beforeInteractive"
+        ></Script>
+        <Script
+          src="/assets/js/plugins/smoothscroll.js"
+          strategy="beforeInteractive"
+        ></Script>
+        <Script
+          src="/assets/js/plugins/scrollmagic.js"
+          strategy="beforeInteractive"
+        ></Script>
+        <Script
+          src="/assets/js/plugins/animate-scrollmagic.js"
+          strategy="beforeInteractive"
+        ></Script>
+        <Script
+          src="/assets/js/plugins/tilt.js"
+          strategy="beforeInteractive"
+        ></Script>
+        <Script
+          src="/assets/js/plugins/counterup.js"
+          strategy="beforeInteractive"
+        ></Script>
+        <Script
+          src="/assets/js/vendor/waw.js"
+          strategy="beforeInteractive"
+        ></Script>
+        <Script src="/assets/js/main.js"></Script>
       </body>
     </html>
   );

@@ -78,6 +78,7 @@ export async function fetchProductByHandle(handle) {
           availableForSale
           title
           description
+          descriptionHtml
           images(first: 4) {
             edges {
               node {
