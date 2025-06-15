@@ -163,48 +163,59 @@ export default function ShopProduct({ params }) {
                 options.map((option) => {
                   const values = mapOptionValueCollection(option.optionValues);
                   return (
-                    <Select.Root
-                      key={option.name}
-                      value={selectedOptions?.find(
-                        (o) => o.name === option.name
-                      )}
-                      onValueChange={(e) =>
-                        onOptionChange(option.name, e.value)
-                      }
-                      collection={values}
-                      size="lg"
-                      width="320px"
-                    >
-                      <Select.Label>{option.name}</Select.Label>
-                      <Select.Control>
-                        <Select.Trigger>
-                          <Select.ValueText
-                            placeholder={`Select ${option.name}`}
-                          />
-                        </Select.Trigger>
-                        <Select.IndicatorGroup>
-                          <Select.Indicator />
-                        </Select.IndicatorGroup>
-                      </Select.Control>
-                      <Portal>
-                        <Select.Positioner>
-                          <Select.Content>
-                            {values.items.map((item) => {
-                              return (
-                                <Select.Item key={item.value} item={item}>
-                                  {item.label}
-                                  <Select.ItemIndicator />
-                                </Select.Item>
-                              );
-                            })}
-                          </Select.Content>
-                        </Select.Positioner>
-                      </Portal>
-                    </Select.Root>
-                  );
+                    <select onChange={(e) => onOptionChange(option.name, e.target.value)} key={option.name} className="form-select form-select-lg">
+                      {values.items.map((item) => {
+                        return (
+                          <option value={item.value}>{item.label}</option>
+                        )
+                      })}
+                    </select>
+                  )
+                  // return (
+                  //   <Select.Root
+                  //     key={option.name}
+                  //     value={selectedOptions?.find(
+                  //       (o) => o.name === option.name
+                  //     )}
+                  //     onValueChange={(e) =>
+                  //       onOptionChange(option.name, e.value)
+                  //     }
+                  //     collection={values}
+                  //     size="lg"
+                  //     width="320px"
+                  //   >
+                  //     <Select.HiddenSelect />
+                  //     <Select.Label>{option.name}</Select.Label>
+                  //     <Select.Control>
+                  //       <Select.Trigger>
+                  //         <Select.ValueText
+                  //           placeholder={`Select ${option.name}`}
+                  //         />
+                  //       </Select.Trigger>
+                  //       <Select.IndicatorGroup>
+                  //         <Select.Indicator />
+                  //       </Select.IndicatorGroup>
+                  //     </Select.Control>
+                  //     <Portal>
+                  //       <Select.Positioner>
+                  //         <Select.Content>
+                  //           {values.items.map((item) => {
+                  //             console.log(item)
+                  //             return (
+                  //               <Select.Item key={item.value} item={item}>
+                  //                 {item.label}
+                  //                 <Select.ItemIndicator />
+                  //               </Select.Item>
+                  //             );
+                  //           })}
+                  //         </Select.Content>
+                  //       </Select.Positioner>
+                  //     </Portal>
+                  //   </Select.Root>
+                  // );
                 })}
 
-              <h5 class="title" style={{color: "#000"}}>
+              <h5 className="title" style={{color: "#000"}}>
                 {!availableForSale
                   ? "SOLD OUT"
                   : currencyFormatter.format(variant.price.amount)}
