@@ -61,7 +61,22 @@ export default function ShopProduct({ params }) {
   };
 
   const onOptionChange = (option, value) => {
-    setSelectedOptions([...selectedOptions, { name: option, value: value[0] }]);
+    const existingOption = selectedOptions.find(o => o.name === option)
+    if (existingOption) {
+      setSelectedOptions(selectedOptions.map(o => {
+        if (o.name === option) {
+          return {
+            ...o,
+            value
+          }
+        } else {
+          return o
+        }
+      }));
+    } else {
+      setSelectedOptions([...selectedOptions, { name: option, value: value }]);
+    }
+    
   };
 
   const mapOptionValueCollection = (optionValues) => {
@@ -164,6 +179,7 @@ export default function ShopProduct({ params }) {
                   const values = mapOptionValueCollection(option.optionValues);
                   return (
                     <select onChange={(e) => onOptionChange(option.name, e.target.value)} key={option.name} className="form-select form-select-lg">
+                      <option>Select a size</option>
                       {values.items.map((item) => {
                         return (
                           <option value={item.value}>{item.label}</option>
