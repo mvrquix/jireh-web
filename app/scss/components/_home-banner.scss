@@ -1,0 +1,22 @@
+.home-page-banner {
+    position: relative;
+    background-image: url('../../../public/assets/images/home-banner.jpg');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 600px;
+
+    &-shop-btn {
+        width: fit-content !important;
+        position: absolute;
+        bottom: 25px;
+        left: 25px;
+        padding: 10px 15px;
+        color: #fff;
+        text-transform: uppercase;
+        font-weight: 700;
+        background-color: #000;
+        text-decoration: none;
+    }
+}

@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import NextImage from "next/image";
 import { Flex, Image, Progress, Skeleton } from "@chakra-ui/react";
 import { fetchAllProducts } from "../actions/shopify-actions";
-import { ShopProductCard } from "../components/shop-product-card";
-import Script from "next/script";
 import { useRouter } from "next/navigation";
 
 export default function Shop() {
@@ -56,106 +54,59 @@ export default function Shop() {
         );
 
   return (
-    <div className="rts-portfolio-grid-area rts-section-gapBottom masonry">
-      <div className="main-isotop">
-        <div className="container">
-          <div className="button-group filters-button-group style-1">
-            <button
-              onClick={() => setSelectedCategory("all")}
-              className={`button ${selectedCategory === "all" && "is-checked"}`}
-              data-filter="*"
-            >
-              All
-            </button>
-            <button
-              onClick={() => setSelectedCategory("hat")}
-              className={`button ${selectedCategory === "hat" && "is-checked"}`}
-              data-filter=".hat"
-            >
-              Hats
-            </button>
-            <button
-              onClick={() => setSelectedCategory("shirt")}
-              className={`button ${selectedCategory === "shirt" && "is-checked"}`}
-              data-filter=".shirt"
-            >
-              T-shirts
-            </button>
-            <button
-              onClick={() => setSelectedCategory("crewneck")}
-              className={`button ${selectedCategory === "crewneck" && "is-checked"}`}
-              data-filter=".crewneck"
-            >
-              Crewnecks
-            </button>
-            <button
-              onClick={() => setSelectedCategory("pants")}
-              className={`button ${selectedCategory === "pants" && "is-checked"}`}
-              data-filter=".pants"
-            >
-              Pants
-            </button>
-            <button
-              onClick={() => setSelectedCategory("shorts")}
-              className={`button ${selectedCategory === "shorts" && "is-checked"}`}
-              data-filter=".shorts"
-            >
-              Shorts
-            </button>
-          </div>
-
-          <div className="row">
-            {selectedProducts &&
-              selectedProducts.map((product) => {
-                const {
-                  id,
-                  availableForSale,
-                  handle,
-                  title,
-                  featuredImage,
-                  priceRange,
-                  variants,
-                } = product.node;
-                const variantId = variants.edges[0].node.id;
-                const currencyFormatter = new Intl.NumberFormat("en-US", {
-                  style: "currency",
-                  currency: "USD",
-                });
-                const formattedPrice = currencyFormatter.format(
-                  priceRange.minVariantPrice.amount
-                );
-                const category = getProductCategory(title);
-                return (
-                  <div
-                    key={id}
-                    className={`col-lg-4 element-item ${category}`}
-                    style={{ cursor: "pointer" }}
-                  >
-                    <div className="signle-portfolio-style-four-inner ptb--20">
-                      <a
-                        onClick={() => router.push(`/shop/${handle}`)}
-                        className="thumbnail"
-                      >
-                        <NextImage
-                          src={featuredImage.url}
-                          alt={title}
-                          width={610}
-                          height={330}
-                          style={{ width: "100%" }}
-                        />
-                      </a>
-                      <div className="inner-content">
-                        {!availableForSale && <span> Sold out</span> }
-                        <a onClick={() => router.push(`/shop/${handle}`)}>
-                          <h5 className="name">{title}</h5>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-          </div>
-        </div>
+    <div className="container">
+      <div className="row">
+        {selectedProducts &&
+          selectedProducts.map((product) => {
+            const {
+              id,
+              availableForSale,
+              handle,
+              title,
+              featuredImage,
+              priceRange,
+              variants,
+            } = product.node;
+            const variantId = variants.edges[0].node.id;
+            const currencyFormatter = new Intl.NumberFormat("en-US", {
+              style: "currency",
+              currency: "USD",
+            });
+            const formattedPrice = currencyFormatter.format(
+              priceRange.minVariantPrice.amount
+            );
+            const category = getProductCategory(title);
+            return (
+              <div
+                key={id}
+                className="shop-item col-lg-4"
+                style={{ cursor: "pointer" }}
+              >
+                <a
+                  onClick={() => router.push(`/shop/${handle}`)}
+                  className="shop-item-thumbnail"
+                >
+                  <NextImage
+                    src={featuredImage.url}
+                    alt={title}
+                    width={610}
+                    height={330}
+                    style={{ width: "100%" }}
+                  />
+                </a>
+                <div className="shop-item-details">
+                  <a onClick={() => router.push(`/shop/${handle}`)}>
+                    <h5 className="shop-item-name">
+                      {title}{" "}
+                      {!availableForSale && (
+                        <span className="shop-item-sold-out"> Sold out</span>
+                      )}
+                    </h5>
+                  </a>
+                </div>
+              </div>
+            );
+          })}
       </div>
     </div>
   );

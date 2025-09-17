@@ -1,0 +1,27 @@
+.header {
+    padding: 10px;
+    &-nav {
+        display: flex;
+        width: fit-content;
+    }
+
+    &-logo {
+        display: flex;
+        justify-content: center;
+        width: 250px;
+    }
+
+    &-logo img {
+        width: 100px;
+    }
+}
+
+.nav-link {
+    color: #000 !important;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.nav-link:hover, .active {
+    text-decoration: underline !important;
+}

@@ -1,13 +1,23 @@
 "use client";
 
+import "./scss/styles.scss";
 import { Provider } from "@/components/ui/provider";
-import Script from "next/script";
-import Header from "./components/landing-header";
-import Footer from "./components/landing-footer";
+import {
+  ChakraProvider,
+  defineConfig,
+  createSystem,
+  defaultConfig,
+} from "@chakra-ui/react";
+import Header from "./components/header";
+import Footer from "./components/footer";
+
+const config = defineConfig({
+  theme: {},
+});
+
+const system = createSystem(defaultConfig, config);
 
 export default function RootLayout({ children }) {
-
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -32,114 +42,24 @@ export default function RootLayout({ children }) {
         />
 
         <meta property="og:url" content="https://www.jirehathletics.com" />
-
-        <link rel="stylesheet" href="/assets/css/plugins/fontawesome-6.css" />
-        <link rel="stylesheet" href="/assets/css/plugins/swiper.min.css" />
-        <link rel="stylesheet" href="/assets/css/vendor/metismenu.css" />
-        <link rel="stylesheet" href="/assets/css/plugins/animate.min.css" />
-        <link rel="stylesheet" href="/assets/css/vendor/bootstrap.min.css" />
-        <link rel="stylesheet" href="/assets/css/style.css" />
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossOrigin="anonymous"
+        ></link>
       </head>
-      <body className="smooth-scroll">
-        <Provider>
+      <body>
+        <ChakraProvider value={system}>
           <Header />
-          <div className="main-content-wrapper">{children}</div>
+          <div className="page-wrapper">{children}</div>
           <Footer />
-          <div className="progress-wrap">
-            <svg
-              className="progress-circle svg-content"
-              width="100%"
-              height="100%"
-              viewBox="-1 -1 102 102"
-            >
-              <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"></path>
-            </svg>
-          </div>
-        </Provider>
-
-        <Script
-          src="/assets/js/vendor/jquery.min.js"
-          strategy="beforeInteractive"
-        ></Script>
-
-        <Script
-          src="/assets/js/plugins/bootstrap.min.js"
-          strategy="beforeInteractive"
-        ></Script>
-
-        <Script
-          src="/assets/js/vendor/waypoint.js"
-          strategy="beforeInteractive"
-        ></Script>
-
-        <Script
-          src="/assets/js/plugins/swiper.js"
-          strategy="beforeInteractive"
-        ></Script>
-
-        <Script
-          src="/assets/js/plugins/resizer-sensor.js"
-          strategy="beforeInteractive"
-        ></Script>
-
-        <Script
-          src="/assets/js/plugins/sticky-sidebar.js"
-          strategy="beforeInteractive"
-        ></Script>
-
-        <Script
-          src="/assets/js/plugins/isotop.js"
-          strategy="beforeInteractive"
-        ></Script>
-        <Script
-          src="/assets/js/plugins/imagesloaded.pkgd.min.js"
-          strategy="beforeInteractive"
-        ></Script>
-        <Script
-          src="/assets/js/plugins/smoothscroll-varticle.js"
-          strategy="beforeInteractive"
-        ></Script>
-        <Script
-          src="/assets/js/vendor/gsap.js"
-          strategy="beforeInteractive"
-        ></Script>
-        <Script
-          src="/assets/js/plugins/scrolltiger.js"
-          strategy="beforeInteractive"
-        ></Script>
-        <Script
-          src="/assets/js/plugins/scrolltoplugin.js"
-          strategy="beforeInteractive"
-        ></Script>
-        <Script
-          src="/assets/js/plugins/splittext.js"
-          strategy="beforeInteractive"
-        ></Script>
-        <Script
-          src="/assets/js/plugins/smoothscroll.js"
-          strategy="beforeInteractive"
-        ></Script>
-        <Script
-          src="/assets/js/plugins/scrollmagic.js"
-          strategy="beforeInteractive"
-        ></Script>
-        <Script
-          src="/assets/js/plugins/animate-scrollmagic.js"
-          strategy="beforeInteractive"
-        ></Script>
-        <Script
-          src="/assets/js/plugins/tilt.js"
-          strategy="beforeInteractive"
-        ></Script>
-        <Script
-          src="/assets/js/plugins/counterup.js"
-          strategy="beforeInteractive"
-        ></Script>
-        <Script
-          src="/assets/js/vendor/waw.js"
-          strategy="beforeInteractive"
-        ></Script>
-        <Script src="/assets/js/main.js"></Script>
+        </ChakraProvider>
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+          crossOrigin="anonymous"
+        ></script>
       </body>
     </html>
   );

@@ -61,22 +61,23 @@ export default function ShopProduct({ params }) {
   };
 
   const onOptionChange = (option, value) => {
-    const existingOption = selectedOptions.find(o => o.name === option)
+    const existingOption = selectedOptions.find((o) => o.name === option);
     if (existingOption) {
-      setSelectedOptions(selectedOptions.map(o => {
-        if (o.name === option) {
-          return {
-            ...o,
-            value
+      setSelectedOptions(
+        selectedOptions.map((o) => {
+          if (o.name === option) {
+            return {
+              ...o,
+              value,
+            };
+          } else {
+            return o;
           }
-        } else {
-          return o
-        }
-      }));
+        })
+      );
     } else {
       setSelectedOptions([...selectedOptions, { name: option, value: value }]);
     }
-    
   };
 
   const mapOptionValueCollection = (optionValues) => {
@@ -135,11 +136,6 @@ export default function ShopProduct({ params }) {
       paddingBottom="25px"
       style={{ minHeight: "100vh" }}
     >
-      <BreadcrumbRoot style={{ marginBottom: "25px" }}>
-        <BreadcrumbLink href="/shop">
-          <RiArrowGoBackFill /> Back to Shop
-        </BreadcrumbLink>
-      </BreadcrumbRoot>
       {product && (
         <Stack direction={{ base: "column", md: "row" }} wrap="wrap" gap="8">
           <Box width={{ base: "100%", lg: "48%" }}>
@@ -167,89 +163,50 @@ export default function ShopProduct({ params }) {
 
           <Box width={{ base: "100%", lg: "48%" }} paddingBottom="8">
             <Stack gap="8">
-              <Heading size="xl" fontWeight="bold" color={"black"}>
-                {product.title}
-              </Heading>
+              <h1 className="product-title">{product.title}</h1>
               <Text
                 dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
               ></Text>
 
-              {hasOptions &&
+              {availableForSale &&
+                hasOptions &&
                 options.map((option) => {
                   const values = mapOptionValueCollection(option.optionValues);
                   return (
-                    <select onChange={(e) => onOptionChange(option.name, e.target.value)} key={option.name} className="form-select form-select-lg">
+                    <select
+                      onChange={(e) =>
+                        onOptionChange(option.name, e.target.value)
+                      }
+                      key={option.name}
+                      className="form-select form-select-lg"
+                    >
                       <option>Select a size</option>
                       {values.items.map((item) => {
                         return (
-                          <option value={item.value}>{item.label}</option>
-                        )
+                          <option key={item.label} value={item.value}>
+                            {item.label}
+                          </option>
+                        );
                       })}
                     </select>
-                  )
-                  // return (
-                  //   <Select.Root
-                  //     key={option.name}
-                  //     value={selectedOptions?.find(
-                  //       (o) => o.name === option.name
-                  //     )}
-                  //     onValueChange={(e) =>
-                  //       onOptionChange(option.name, e.value)
-                  //     }
-                  //     collection={values}
-                  //     size="lg"
-                  //     width="320px"
-                  //   >
-                  //     <Select.HiddenSelect />
-                  //     <Select.Label>{option.name}</Select.Label>
-                  //     <Select.Control>
-                  //       <Select.Trigger>
-                  //         <Select.ValueText
-                  //           placeholder={`Select ${option.name}`}
-                  //         />
-                  //       </Select.Trigger>
-                  //       <Select.IndicatorGroup>
-                  //         <Select.Indicator />
-                  //       </Select.IndicatorGroup>
-                  //     </Select.Control>
-                  //     <Portal>
-                  //       <Select.Positioner>
-                  //         <Select.Content>
-                  //           {values.items.map((item) => {
-                  //             console.log(item)
-                  //             return (
-                  //               <Select.Item key={item.value} item={item}>
-                  //                 {item.label}
-                  //                 <Select.ItemIndicator />
-                  //               </Select.Item>
-                  //             );
-                  //           })}
-                  //         </Select.Content>
-                  //       </Select.Positioner>
-                  //     </Portal>
-                  //   </Select.Root>
-                  // );
+                  );
                 })}
 
-              <h5 className="title" style={{color: "#000"}}>
-                {!availableForSale
-                  ? "SOLD OUT"
-                  : currencyFormatter.format(variant.price.amount)}
-              </h5>
+              {!availableForSale ? (
+                <h5 className="sold-out">SOLD OUT</h5>
+              ) : (
+                <h5>{currencyFormatter.format(variant.price.amount)}</h5>
+              )}
+
               {availableForSale && (
-                <Button
+                <button
+                  className="cart-btn"
+                  type="button"
                   onClick={() => onAddToCartClick()}
                   disabled={!validateSelectedOptions()}
-                  width={{ base: "100%", lg: "180px" }}
-                  size="lg"
-                  color="white"
-                  backgroundColor="black"
-                  rounded="full"
-                  paddingTop="25px"
-                  paddingBottom="25px"
                 >
                   Add To Cart
-                </Button>
+                </button>
               )}
             </Stack>
           </Box>
