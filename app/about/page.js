@@ -11,7 +11,7 @@ export default function About() {
           />
         </div>
         <div className="col-lg-6">
-          <h2 className="text-uppercase">
+          <h2 className="text-uppercase mt-4">
             <strong>A New Chapter Starts Here</strong>
           </h2>
           <p className="disc rts-text-anim">
