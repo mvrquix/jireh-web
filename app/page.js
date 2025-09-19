@@ -18,53 +18,67 @@ export default function Home() {
 
   return (
     <div className="home-page container">
-      <div className="home-page-banner row">
-        <a href="/shop" className="home-page-banner-shop-btn">
-          Shop Genesis Collection
-        </a>
-      </div>
-      <div className="home-page-showcase row my-5">
-        <div className="col-lg-6 my-4">
-          <img
-            className="anim-image-parallax tt-lazy"
-            src="assets/images/home-1.jpg"
-            data-src="assets/images/home-1.jpg"
-            alt="image"
-          />
+      <div className="row">
+        <div className="home-page-banner">
+          <a href="/shop" className="home-page-banner-shop-btn">
+            Shop Genesis Collection
+          </a>
         </div>
-        <div className="col-lg-6 my-4">
-          <img
-            className="anim-image-parallax tt-lazy"
-            src="assets/images/home-5.jpg"
-            data-src="assets/images/home-5.jpg"
-            alt="image"
-          />
-        </div>
-      </div>
-      <div className="home-page-collection row my-5">
-        {products &&
-          products.slice(0, 3).map((product) => {
-            return <ProductItem key={product.id} product={product} />;
-          })}
       </div>
 
-      <div className="home-page-subscribe row">
-        <div className="col-md-8 col-sm-12">
-          <h1 className="text-uppercase text-center mb-4">
-            <strong>The Lord will Provide</strong>
-          </h1>
-          <h6 className="text-uppercase mb-4">
-            Join our email list to stay up to date on deals and events
-          </h6>
-          <div className="input-group">
-            <input
-              placeholder="Enter your email address"
-              type="text"
-              className="form-control"
-            />
-            <button className="subscribe-btn" type="button">
-              <strong>Subscribe</strong>
-            </button>
+      <div className="row my-5">
+        <div className="home-page-showcase">
+          <div className="row">
+            <div className="col-lg-6 my-4">
+              <img
+                className="anim-image-parallax tt-lazy"
+                src="assets/images/home-1.jpg"
+                data-src="assets/images/home-1.jpg"
+                alt="image"
+              />
+            </div>
+            <div className="col-lg-6 my-4">
+              <img
+                className="anim-image-parallax tt-lazy"
+                src="assets/images/home-5.jpg"
+                data-src="assets/images/home-5.jpg"
+                alt="image"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="row my-5">
+        <div className="home-page-collection">
+          <div className="row">
+            {products &&
+              products.slice(0, 3).map((product) => {
+                return <ProductItem key={product.id} product={product} />;
+              })}
+          </div>
+        </div>
+      </div>
+
+      <div className="row my-5">
+        <div className="home-page-subscribe">
+          <div className="col-md-8 col-sm-12">
+            <h1 className="text-uppercase text-center mb-4">
+              <strong>The Lord will Provide</strong>
+            </h1>
+            <h6 className="text-uppercase mb-4">
+              Join our email list to stay up to date on deals and events
+            </h6>
+            <div className="input-group">
+              <input
+                placeholder="Enter your email address"
+                type="text"
+                className="form-control"
+              />
+              <button className="subscribe-btn" type="button">
+                <strong>Subscribe</strong>
+              </button>
+            </div>
           </div>
         </div>
       </div>
