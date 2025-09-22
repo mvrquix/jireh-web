@@ -5,18 +5,33 @@ import { cookies } from "next/headers";
 async function sendRequest({ query, variables }) {
   const endpoint = process.env.SHOPIFY_STORE_DOMAIN;
   const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+  const headers = {
+    "Content-Type": "application/json; charset=utf-8",
+    "X-Shopify-Storefront-Access-Token": key,
+  };
+  return await _send(endpoint, headers, query, variables);
+}
+
+async function sendAdminRequest({ query, variables }) {
+  const endpoint = process.env.SHOPIFY_STORE_ADMIN_DOMAIN;
+  const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN;
+  const headers = {
+    "Content-Type": "application/json; charset=utf-8",
+    "X-Shopify-Access-Token": key,
+  };
+  return await _send(endpoint, headers, query, variables);
+}
+
+async function _send(endpoint, headers, query, variables) {
   try {
     const response = await fetch(endpoint, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json; charset=utf-8",
-        "X-Shopify-Storefront-Access-Token": key,
-      },
+      headers: headers,
       body: { query, variables } && JSON.stringify({ query, variables }),
     });
     const json = await response.json();
     if (json.errors) {
-      console.error("Error: ", json.errors[0]);
+      console.error("Error: ", json.errors);
       return {
         error: "Unexpected error",
       };
@@ -312,6 +327,33 @@ export async function removeProductFromCart(cartId, cartLineId) {
     variables: {
       cartId: cartId,
       lineIds: [cartLineId],
+    },
+  });
+}
+
+export async function subscribeCustomer(email) {
+  return await sendAdminRequest({
+    query: `
+      mutation customerCreate($input: CustomerInput!) {
+        customerCreate(input: $input) {
+          userErrors {
+            field
+            message
+          }
+          customer {
+            id
+          }
+        }
+      }
+    `,
+    variables: {
+      input: {
+        email: email,
+        emailMarketingConsent: {
+          marketingState: "SUBSCRIBED",
+          marketingOptInLevel: "SINGLE_OPT_IN",
+        },
+      },
     },
   });
 }
