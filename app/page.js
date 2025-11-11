@@ -1,8 +1,17 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
+import {
+  AspectRatio,
+  Carousel,
+  HStack,
+  IconButton,
+  Image,
+  VStack,
+} from "@chakra-ui/react";
 import { fetchAllProducts, subscribeCustomer } from "./actions/shopify-actions";
 import ProductItem from "./components/product-item";
+import { LuChevronLeft, LuChevronRight, LuPause, LuPlay } from "react-icons/lu";
 
 export default function Home() {
   const [products, setProducts] = useState(null);
@@ -15,7 +24,11 @@ export default function Home() {
 
   const getAllProducts = async () => {
     const result = await fetchAllProducts();
-    setProducts(result);
+    setProducts(
+      result.sort(
+        (a, b) => new Date(b.node.createdAt) - new Date(a.node.createdAt)
+      )
+    );
   };
 
   const onSubscribeClick = async () => {
@@ -27,14 +40,48 @@ export default function Home() {
     }
   };
 
+  const carouselItems = Array.from({ length: 10 });
+
   return (
     <div className="home-page container">
-      <div className="row">
-        <div className="home-page-banner">
+      <div className="row my-5">
+        <Carousel.Root
+          slideCount={carouselItems.length}
+          mx="auto"
+          maxW="xl"
+          autoplay={{ delay: 7000 }}
+        >
+          <Carousel.ItemGroup>
+            {carouselItems.map((_, index) => {
+              return (
+                <Carousel.Item key={index} index={index}>
+                  <AspectRatio ratio={3 / 4} w="full">
+                    <Image
+                      src={`assets/images/carousel/${String(index + 1).padStart(2, "0")}.jpg`}
+                      objectFit="contain"
+                    />
+                  </AspectRatio>
+                  <img />
+                </Carousel.Item>
+              );
+            })}
+          </Carousel.ItemGroup>
+          <Carousel.Control justifyContent="center" gap="4">
+            <Carousel.Indicators />
+          </Carousel.Control>
+        </Carousel.Root>
+      </div>
+
+      <div className="row my-5">
+        <VStack>
+          <img
+            src="assets/images/jireh-athletics-logo.png"
+            style={{ width: "50%" }}
+          />
           <a href="/shop" className="home-page-banner-shop-btn">
-            Shop Genesis Collection
+            Shop The Collection
           </a>
-        </div>
+        </VStack>
       </div>
 
       <div className="row my-5">
@@ -61,17 +108,40 @@ export default function Home() {
       </div>
 
       <div className="row my-5">
-        <div className="home-page-collection">
+        <div className="home-page-showcase">
           <div className="row">
-            {products &&
-              products.slice(0, 3).map((product) => {
-                return <ProductItem key={product.id} product={product} />;
-              })}
+            <div className="col-lg-6 my-4">
+              <img
+                className="anim-image-parallax tt-lazy"
+                src="assets/images/home-2.jpg"
+                data-src="assets/images/home-1.jpg"
+                alt="image"
+              />
+            </div>
+            <div className="col-lg-6 my-4">
+              <img
+                className="anim-image-parallax tt-lazy"
+                src="assets/images/home-4.jpg"
+                data-src="assets/images/home-5.jpg"
+                alt="image"
+              />
+            </div>
           </div>
         </div>
       </div>
 
       <div className="row my-5">
+        <div className="home-page-collection">
+          <div className="row">
+            {products &&
+              products.slice(0, 3).map((product) => {
+                return <ProductItem key={product.node.id} product={product} />;
+              })}
+          </div>
+        </div>
+      </div>
+
+      {/* <div className="row my-5">
         <div className="home-page-subscribe">
           <div className="col-md-8 col-sm-12">
             <h1 className="text-uppercase text-center mb-4">
@@ -106,7 +176,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

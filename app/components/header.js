@@ -8,6 +8,7 @@ import {
   EmptyState,
   Flex,
   Image,
+  NumberInput,
   Portal,
   Stack,
   Text,
@@ -19,10 +20,6 @@ import {
   removeProductFromCart,
   updateProductQuantityInCart,
 } from "../actions/shopify-actions";
-import {
-  NumberInputField,
-  NumberInputRoot,
-} from "@/components/ui/number-input";
 import { useEventEmitter } from "../hooks/event-emitter-hook";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -100,7 +97,7 @@ export default function Header() {
                 <strong>
                   Cart
                   {cart && cartItemCount > 0 && (
-                    <span className="badge rounded-circle bg-dark ms-2">
+                    <span className="badge bg-secondary rounded-circle ms-2">
                       {cartItemCount}
                     </span>
                   )}
@@ -169,14 +166,14 @@ export default function Header() {
                               )}
                             </Text>
                             <Stack gap="6">
-                              <NumberInputRoot
+                              <NumberInput.Root
                                 defaultValue={quantity}
                                 onValueChange={(e) =>
                                   onItemQuantityUpdate(id, parseInt(e.value))
                                 }
                               >
-                                <NumberInputField />
-                              </NumberInputRoot>
+                                <NumberInput.Input />
+                              </NumberInput.Root>
                               <Button
                                 onClick={() => onRemoveItemClick(id)}
                                 colorPalette="red"

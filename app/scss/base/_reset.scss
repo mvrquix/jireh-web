@@ -2,6 +2,7 @@
 *::before,
 *::after {
     box-sizing: border-box;
+    color: #fff;
 }
 
 body,
@@ -17,8 +18,14 @@ blockquote,
 dl,
 dd {
     margin: 0;
+    color: #fff;
 }
 
 body {
     min-height: 100vh;
+    background-color: #000 !important;
+}
+
+.chakra-drawer__content {
+    background-color: #000;
 }

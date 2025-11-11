@@ -3,27 +3,20 @@
 import { useEffect, useState, use } from "react";
 import {
   Box,
-  Button,
   Container,
   Group,
-  Heading,
   Image,
-  Select,
   Stack,
   Text,
   createListCollection,
-  Portal,
   Progress,
   Flex,
 } from "@chakra-ui/react";
 import {
   addProductToCart,
   fetchProductByHandle,
-} from "@/app/actions/shopify-actions";
-import { Skeleton, SkeletonText } from "@/components/ui/skeleton";
-import { BreadcrumbLink, BreadcrumbRoot } from "@/components/ui/breadcrumb";
-import { RiArrowGoBackFill } from "react-icons/ri";
-import { useEventEmitter } from "@/app/hooks/event-emitter-hook";
+} from "../../actions/shopify-actions";
+import { useEventEmitter } from "../../hooks/event-emitter-hook";
 
 export default function ShopProduct({ params }) {
   const { handle } = use(params);
@@ -140,12 +133,7 @@ export default function ShopProduct({ params }) {
         <Stack direction={{ base: "column", md: "row" }} wrap="wrap" gap="8">
           <Box width={{ base: "100%", lg: "48%" }}>
             <Stack wrap="wrap">
-              <Image
-                src={selectedImage.node.url}
-                rounded="md"
-                width="100%"
-                maxHeight="505px"
-              />
+              <Image src={selectedImage.node.url} rounded="md" width="100%" />
               <Group wrap="wrap">
                 {images.edges.map((image) => (
                   <Image
@@ -178,7 +166,7 @@ export default function ShopProduct({ params }) {
                         onOptionChange(option.name, e.target.value)
                       }
                       key={option.name}
-                      className="form-select form-select-lg"
+                      className="form-select form-select-lg text-light bg-dark"
                     >
                       <option>Select a size</option>
                       {values.items.map((item) => {

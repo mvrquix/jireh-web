@@ -61,6 +61,7 @@ export async function fetchAllProducts() {
                   handle
                   title
                   description
+                  createdAt
                   featuredImage {
                     url
                   }
