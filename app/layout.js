@@ -41,7 +41,7 @@ export default function RootLayout({ children }) {
 
         <meta
           property="og:image"
-          content="https://github.com/mvrquix/jireh-web/blob/main/public/img/home/logo-black-with-bg.png?raw=true"
+          content="https://github.com/mvrquix/jireh-web/blob/main/public/assets/images/jireh-athletics-logo.png?raw=true"
         />
 
         <meta property="og:url" content="https://www.jirehathletics.com" />
