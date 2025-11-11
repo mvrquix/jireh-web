@@ -55,7 +55,7 @@ export default function Shop() {
 
   return (
     <div className="container py-5">
-      <Masonry columns={3} spacing={2}>
+      <Masonry columns={{ xs: 1, md: 3 }} spacing={2}>
         {products.map((product) => {
           const {
             id,
