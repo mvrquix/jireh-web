@@ -40,7 +40,7 @@ export default function Home() {
     }
   };
 
-  const carouselItems = Array.from({ length: 8 });
+  const carouselItems = Array.from({ length: 7 });
 
   return (
     <div className="home-page container">
