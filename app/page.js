@@ -134,7 +134,6 @@ export default function Home() {
               <img
                 className="anim-image-parallax tt-lazy"
                 src="assets/images/home-8.jpg"
-                data-src="assets/images/home-5.jpg"
                 alt="image"
               />
             </div>
@@ -142,7 +141,6 @@ export default function Home() {
               <img
                 className="anim-image-parallax tt-lazy"
                 src="assets/images/home-7.jpg"
-                data-src="assets/images/home-1.jpg"
                 alt="image"
               />
             </div>
@@ -150,7 +148,6 @@ export default function Home() {
               <img
                 className="anim-image-parallax tt-lazy"
                 src="assets/images/home-9.jpg"
-                data-src="assets/images/home-5.jpg"
                 alt="image"
               />
             </div>
