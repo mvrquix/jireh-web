@@ -135,21 +135,21 @@ export default function Home() {
             <div className="col-lg-4 my-4">
               <img
                 className="anim-image-parallax tt-lazy"
-                src="assets/images/home-8.jpg"
+                src="assets/images/home-8.JPG"
                 alt="image"
               />
             </div>
             <div className="col-lg-4 my-4">
               <img
                 className="anim-image-parallax tt-lazy"
-                src="assets/images/home-7.jpg"
+                src="assets/images/home-7.JPG"
                 alt="image"
               />
             </div>
             <div className="col-lg-4 my-4">
               <img
                 className="anim-image-parallax tt-lazy"
-                src="assets/images/home-9.jpg"
+                src="assets/images/home-9.JPG"
                 alt="image"
               />
             </div>
