@@ -50,6 +50,8 @@ export default function Home() {
           mx="auto"
           maxW="xl"
           autoplay={{ delay: 7000 }}
+          allowMouseDrag={true}
+          autoSize={true}
         >
           <Carousel.ItemGroup>
             {carouselItems.map((_, index) => {
