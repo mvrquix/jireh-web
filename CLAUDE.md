@@ -25,15 +25,19 @@ Create `.env.local` (all `.env*` files are gitignored) with these variables:
 
 - `SHOPIFY_STORE_DOMAIN`: the full Storefront GraphQL endpoint URL that requests are POSTed to (`https://<store>.myshopify.com/api/<version>/graphql.json`), not a bare domain.
 - `SHOPIFY_STOREFRONT_ACCESS_TOKEN`
-- `SHOPIFY_STORE_ADMIN_DOMAIN`: the Admin GraphQL endpoint. Only `subscribeCustomer` uses it, and it sends `SHOPIFY_STOREFRONT_ACCESS_TOKEN` as the admin token. The newsletter form that calls it is commented out in `app/page.js`.
+- `SHOPIFY_STORE_ADMIN_DOMAIN`: the Admin GraphQL endpoint. Only `subscribeCustomer` uses it, and it sends `SHOPIFY_STOREFRONT_ACCESS_TOKEN` as the admin token. Nothing calls `subscribeCustomer` any more: the home page's subscribe form now posts to jireh-cms.
+- `CMS_URL`: base URL of jireh-cms (`../jireh-cms`), e.g. `http://localhost:3001` locally. Without it, or when the CMS can't be reached, the home page renders `FALLBACK_HOME_CONTENT` and the subscribe form returns an error.
 
 ## Architecture
 
 ### Data flow
 
 - All Shopify access lives in `app/actions/shopify-actions.js`, a `"use server"` module, so every exported function is a Server Action. GraphQL queries are inline template strings. `_send` returns `{ status, body }` on success and `{ error }` on failure. The exported fetchers read `response.body.…` without checking for an error, so a Shopify failure shows up in the caller as a TypeError.
-- Every page and component is a client component, including the root `app/layout.js`. Because of that, the `<head>`/OG tags are written by hand there; the app does not use Next's `metadata` export. Pages call server actions from `useEffect` and keep the results in `useState`. Product data is not rendered on the server and is not cached.
-- Product lists are sorted newest-first on the client by `createdAt`. The home page shows the first 3, and `/shop` shows all of them in an MUI Masonry grid. `fetchAllProducts` returns at most 100 products.
+- Every page and component is a client component except the home page (`app/page.js`), including the root `app/layout.js`. Because the layout is a client component, the `<head>`/OG tags are written by hand there; the app does not use Next's `metadata` export. Pages call server actions from `useEffect` and keep the results in `useState`. Product data is not rendered on the server and is not cached.
+- The home page content (carousel, banner, showcase rows, featured product count, subscribe section) comes from jireh-cms, not from code. `app/page.js` is a server component: it calls `await connection()`, then `getHomeContent()` in `app/lib/cms.js`, which fetches `${CMS_URL}/api/public/home` uncached with a 5 s timeout. It passes the result to the client component `app/components/home-content.js`. The content's shape is defined by `normalizeHomeContent` in `jireh-cms/lib/content.js`; `app/lib/cms.js` only guards against a malformed response.
+- `FALLBACK_HOME_CONTENT` in `app/lib/cms.js` is the page as it was before the CMS, built from images in `public/assets/images/`. It is used only when the CMS is unavailable, never to fill in sections the CMS left empty; an empty section is hidden.
+- The subscribe form calls the `subscribeToEmailList` server action (`app/actions/cms-actions.js`), which posts to `${CMS_URL}/api/public/subscribe` with `source: "home"`.
+- Product lists are sorted newest-first on the client by `createdAt`. The home page shows as many as the CMS's featured product count, and `/shop` shows all of them in an MUI Masonry grid. `fetchAllProducts` returns at most 100 products.
 
 ### Cart
 
@@ -61,5 +65,6 @@ Create `.env.local` (all `.env*` files are gitignored) with these variables:
 
 ### Images
 
-- Static assets live in `public/assets/images/`. The home carousel loads `carousel/12.jpg` through `carousel/18.jpg` by index arithmetic in `app/page.js` (`index + 12` over a 7-item array). To add a slide, add the next numbered file and increase the array length.
+- Home page images are uploaded through jireh-cms to Vercel Blob and come back as absolute `https://…public.blob.vercel-storage.com/…` URLs. They are rendered with plain `<img>`/Chakra `Image`, not `next/image`.
+- Static assets live in `public/assets/images/`. The carousel, logo and showcase files there are only used by `FALLBACK_HOME_CONTENT`.
 - `next.config.mjs` only allows remote `next/image` sources that match `**.shopify.com/s/**`.
