@@ -35,7 +35,6 @@ export default function Home() {
     if (subscriberEmail !== "") {
       startTransition(async () => {
         const result = await subscribeCustomer(subscriberEmail);
-        console.log(result);
       });
     }
   };
@@ -53,11 +52,20 @@ export default function Home() {
           allowMouseDrag={true}
           autoSize={true}
         >
-          <Carousel.ItemGroup>
+          {/* The item group scrolls on the x axis, which makes the browser treat
+              it as scrollable on y too. Lock y so the wheel/touch scrolls the page. */}
+          <Carousel.ItemGroup overflowY="hidden">
             {carouselItems.map((_, index) => {
               return (
                 <Carousel.Item key={index} index={index}>
-                  <AspectRatio ratio={9 / 16} w="full" maxH="600px">
+                  {/* overflow="hidden" clips AspectRatio's 16:9 spacer, which is
+                      taller than the 600px cap and would otherwise overflow. */}
+                  <AspectRatio
+                    ratio={9 / 16}
+                    w="full"
+                    maxH="600px"
+                    overflow="hidden"
+                  >
                     <Image
                       src={`assets/images/carousel/${String(index + 11 + 1).padStart(2, "0")}.jpg`}
                       objectFit="contain"
