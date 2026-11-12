@@ -9,8 +9,9 @@ import ProductItem from "./product-item";
 // Bootstrap column class that fits `count` images on one row on large screens.
 const columnClass = (count) => `col-lg-${Math.max(2, Math.floor(12 / count))}`;
 
-// Renders the home page from the content managed in jireh-cms.
-export default function HomeContent({ content }) {
+// Renders the home page from the content managed in jireh-cms. `preview` is
+// set on the /preview page, where the content is unsaved.
+export default function HomeContent({ content, preview = false }) {
   const { carousel, banner, showcase, featuredProducts, subscribe } = content;
   const [products, setProducts] = useState(null);
 
@@ -30,6 +31,9 @@ export default function HomeContent({ content }) {
       {carousel.slides.length > 0 && (
         <div className="row my-5">
           <Carousel.Root
+            // Remount when the slides change (in the preview), since the
+            // carousel measures its slides once.
+            key={`${carousel.autoplayMs}|${carousel.slides.map((s) => s.url).join("|")}`}
             slideCount={carousel.slides.length}
             mx="auto"
             maxW="xl"
@@ -114,19 +118,24 @@ export default function HomeContent({ content }) {
         <SubscribeSection
           heading={subscribe.heading}
           subheading={subscribe.subheading}
+          preview={preview}
         />
       )}
     </div>
   );
 }
 
-function SubscribeSection({ heading, subheading }) {
+function SubscribeSection({ heading, subheading, preview }) {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);
   const [isPending, startTransition] = useTransition();
 
   const onSubmit = (event) => {
     event.preventDefault();
+    if (preview) {
+      setMessage("Sign-ups are turned off in the preview.");
+      return;
+    }
     if (email.trim() === "") return;
     startTransition(async () => {
       const result = await subscribeToEmailList(email);

@@ -11,7 +11,7 @@ Storefront for Jireh Athletics (jirehathletics.com), an apparel brand. Next.js 1
 ```bash
 npm install
 npm run dev      # http://localhost:3000
-npm run build    # the only automated check available
+npm run build    # the only automated check available. Stop `npm run dev` first: both use .next, and a build clears it under a running dev server
 npm start
 ```
 
@@ -26,7 +26,7 @@ Create `.env.local` (all `.env*` files are gitignored) with these variables:
 - `SHOPIFY_STORE_DOMAIN`: the full Storefront GraphQL endpoint URL that requests are POSTed to (`https://<store>.myshopify.com/api/<version>/graphql.json`), not a bare domain.
 - `SHOPIFY_STOREFRONT_ACCESS_TOKEN`
 - `SHOPIFY_STORE_ADMIN_DOMAIN`: the Admin GraphQL endpoint. Only `subscribeCustomer` uses it, and it sends `SHOPIFY_STOREFRONT_ACCESS_TOKEN` as the admin token. Nothing calls `subscribeCustomer` any more: the home page's subscribe form now posts to jireh-cms.
-- `CMS_URL`: base URL of jireh-cms (`../jireh-cms`), e.g. `http://localhost:3001` locally. Without it, or when the CMS can't be reached, the home page renders `FALLBACK_HOME_CONTENT` and the subscribe form returns an error.
+- `CMS_URL`: base URL of jireh-cms (`../jireh-cms`), e.g. `http://localhost:3001` locally. It must be the address admins open the CMS at, because `/preview` only accepts content from, and can only be framed by, that origin. Without it, or when the CMS can't be reached, the home page renders `FALLBACK_HOME_CONTENT` and the subscribe form returns an error.
 
 ## Architecture
 
@@ -35,7 +35,14 @@ Create `.env.local` (all `.env*` files are gitignored) with these variables:
 - All Shopify access lives in `app/actions/shopify-actions.js`, a `"use server"` module, so every exported function is a Server Action. GraphQL queries are inline template strings. `_send` returns `{ status, body }` on success and `{ error }` on failure. The exported fetchers read `response.body.…` without checking for an error, so a Shopify failure shows up in the caller as a TypeError.
 - Every page and component is a client component except the home page (`app/page.js`), including the root `app/layout.js`. Because the layout is a client component, the `<head>`/OG tags are written by hand there; the app does not use Next's `metadata` export. Pages call server actions from `useEffect` and keep the results in `useState`. Product data is not rendered on the server and is not cached.
 - The home page content (carousel, banner, showcase rows, featured product count, subscribe section) comes from jireh-cms, not from code. `app/page.js` is a server component: it calls `await connection()`, then `getHomeContent()` in `app/lib/cms.js`, which fetches `${CMS_URL}/api/public/home` uncached with a 5 s timeout. It passes the result to the client component `app/components/home-content.js`. The content's shape is defined by `normalizeHomeContent` in `jireh-cms/lib/content.js`; `app/lib/cms.js` only guards against a malformed response.
-- `FALLBACK_HOME_CONTENT` in `app/lib/cms.js` is the page as it was before the CMS, built from images in `public/assets/images/`. It is used only when the CMS is unavailable, never to fill in sections the CMS left empty; an empty section is hidden.
+- `app/lib/home-content-data.js` holds `FALLBACK_HOME_CONTENT` and `normalizeHomeContent`, with no server-only code, because the `/preview` page uses them in the browser.
+- `/preview` (`app/preview/page.js` → `app/components/preview-home.js`) renders *unsaved* content for the CMS's Preview button:
+  - The CMS shows it in an iframe, and the page posts `{ type: "jireh-preview:ready" }` to its parent.
+  - The CMS replies with `{ type: "jireh-preview:content", content }`, and sends that again on every change. The page accepts it only when `event.origin` is the CMS origin (from `CMS_URL`) and `event.source` is the parent window.
+  - `HomeContent` gets `preview`, which turns off the subscribe form.
+  - `next.config.mjs` sends `frame-ancestors 'self' <CMS origin>` and `X-Robots-Tag: noindex` for `/preview`. Headers are fixed at build time, so changing `CMS_URL` needs a rebuild.
+  - The message types are shared with `jireh-cms/components/home-preview.js`.
+- `FALLBACK_HOME_CONTENT` is the page as it was before the CMS, built from images in `public/assets/images/`. It is used only when the CMS is unavailable, never to fill in sections the CMS left empty; an empty section is hidden.
 - The subscribe form calls the `subscribeToEmailList` server action (`app/actions/cms-actions.js`), which posts to `${CMS_URL}/api/public/subscribe` with `source: "home"`.
 - Product lists are sorted newest-first on the client by `createdAt`. The home page shows as many as the CMS's featured product count, and `/shop` shows all of them in an MUI Masonry grid. `fetchAllProducts` returns at most 100 products.
 
